@@ -1,0 +1,67 @@
+﻿<#@ template language="C#" hostspecific="True" debug="true"
+#><#@include file="..\Configuration\Manager.ttinclude"
+#><#@ assembly name="C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ModuleParser\bin\Debug\ModuleParser.dll"
+#><#@ assembly name="System.Core"
+#><#@ import namespace="ModulesParser"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.Linq"
+#><# var manager = Manager.Create(Host, GenerationEnvironment); 
+var configpath = Path.GetDirectoryName(Host.TemplateFile);
+var parser = new ModuleParser(configpath + "\\..\\Configuration\\CorePackage.xml");
+parser.ValidateReferences();
+
+#><# manager.StartHeader(); 
+#>using System.ServiceModel;
+
+namespace Server
+{
+<#
+
+manager.StartNewFile("IService.generated.cs");#>
+	public partial interface IService
+	{
+<#foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient))
+{
+	foreach(var b in parser.Data.Values.Where(d=>d.Messages.ContainsKey(m.Name)))
+	{
+#>
+		[OperationContract]
+		string Post<#=b.Name#><#=m.Name#>Message(<#=string.Join(", ", b.GetKeyNamesAndTypes(b.Name).Select(kv=>kv.Value + " " + kv.Key))#>, <#=m.Name#>Message message);
+
+<#
+	}
+}
+#>	}
+<#
+	manager.EndBlock();
+
+manager.StartNewFile("Service.generated.cs");#>
+	public partial class Service : IService
+	{
+<#foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient))
+{
+	foreach(var b in parser.Data.Values.Where(d=>d.Messages.ContainsKey(m.Name)))
+	{
+#>
+		public string Post<#=b.Name#><#=m.Name#>Message(<#=string.Join(", ", b.GetKeyNamesAndTypes(b.Name).Select(kv=>kv.Value + " " + kv.Key))#>, <#=m.Name#>Message message)
+		{
+			// Find <#=b.Name#> with id "<#=string.Join(", ", b.GetKeyNamesAndTypes(b.Name).Select(kv=>kv.Key))#>"
+			// Check if valid request
+			// Dispatch message
+			return null;
+		}
+
+<#
+	}
+}
+#>	}
+<#
+	manager.EndBlock();
+
+manager.StartFooter();
+#>
+}
+<#
+	manager.EndBlock();
+manager.Process(true);
+ #>

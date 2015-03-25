@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Module name="Core"
+        xmlns="engine"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Using module="Core.Types"/>
+  <Using module="Core.Messages"/>
+  <Using module="Core.Events"/>
+
+  <Data name="GameLoop">
+    <List name="Maps" type="List">
+      <Element name="map" type="Map"/>
+    </List>
+    <Field name="time" type="long" default="0"/>
+    <Field name="quit" type="bool" default="true"/>
+  </Data>
+  
+  <Data name="Cell">
+    <Field name="Id" type="int"/>
+    <Field name="Scale" type="double" default="1"/>
+    <Field name="CellType" type="CellType"/>
+    <List name="Entities" type="List">
+      <Element name="enity" type="Entity"/>
+    </List>
+    <Key>
+      <FieldRef ref="Id"/>
+    </Key>
+  </Data>
+
+  <Data name="CellType">
+    <Field name="Id" type="int"/>
+  </Data>
+
+  <Data name="CellContainer" base="Cell">
+    <Field name="Width" type="int"/>
+    <Field name="Height" type ="int"/>
+    <Array name="Cells">
+      <Array>
+        <Element name="cell" type="Cell"/>
+      </Array>
+    </Array>
+    <Field name="Shape" type="Shape"/>
+    <Required>
+      <FieldRef ref="Width"/>
+      <FieldRef ref="Height"/>
+    </Required>
+    <Messages>
+      <MessageRef ref="UpdatePosition" handled="Directly"/>
+    </Messages>
+    <Events>
+      <Implement event="Tick">
+        <!--<Process message="UpdatePosition"/>-->
+      </Implement>
+    </Events>
+  </Data>
+
+
+  <Data name="Position">
+    <Extends ref="CellContainer" parentvar="Parent" parenttype="Field"/>
+    <Field name="X" type="double"/>
+    <Field name="Y" type="double"/>
+    <Field name="Rotation" type="double"/>
+    <Key>
+      <FieldRef ref="X"/>
+      <FieldRef ref="Y"/>
+      <FieldRef ref="Rotation"/>
+    </Key>
+  </Data>
+
+  <Data name="Map" base="CellContainer">
+    <Field name="Name" type="string"/>
+    <Required>
+      <FieldRef ref="Name"/>
+    </Required>
+    <Events>
+      <Implement event="Tick"/>
+    </Events>
+  </Data>
+
+  <Data name="Shape">
+    <Field name="position" type="Position"/>
+    <List name="edges" type="List">
+      <Element name="edge" type="Edge"/>
+    </List>
+    <Field name="edgesRecalculated" type="bool"/>
+    <Field name="boundingCircleRecalculated" type="bool"/>
+    <Field name="boundingCircleRadiusSquared" type="double"/>
+    <Field name="linesRecalculated" type="bool"/>
+    <List name="lines" type="List">
+      <Element name="line" type="Line"/>
+    </List>
+    <Field name="Definition" type="ShapeDefinition"/>
+    <Key>
+      <FieldRef ref="Definition"/>
+    </Key>
+  </Data>
+
+  <Data name="Line">
+    <Field name="Point1" type="Edge"/>
+    <Field name="Point2" type="Edge"/>
+    <Key>
+      <FieldRef ref="Point1"/>
+      <FieldRef ref="Point2"/>
+    </Key>
+  </Data>
+
+  <Data name="ShapeDefinition">
+    <Field name="Height" type="double"/>
+    <List name="Edges" type="List">
+      <Element name="edge" type="Edge"/>
+    </List>
+  </Data>
+
+  <Data name="Edge">
+    <Field name="Vector" type="Vector"/>
+    <Field name="Height" type="double"/>
+    <Field name="Type"  type="EdgeType"/>
+    <Required>
+      <FieldRef ref="Vector"/>
+      <FieldRef ref="Height"/>
+    </Required>
+  </Data>
+
+  <Data name="MovementType">
+    <List name="Types" type="Dictionary">
+      <Element name="type" type="TypesList"/>
+    </List>
+  </Data>
+
+  <Data name="TypesList">
+    <Field name="Id" type="int"/>
+    <Field name="Name" type="string"/>
+    <Key>
+      <FieldRef ref="Id"/>
+    </Key>
+  </Data>
+
+ 
+</Module>

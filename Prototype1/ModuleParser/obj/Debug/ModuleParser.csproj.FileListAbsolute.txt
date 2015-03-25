@@ -1,0 +1,5 @@
+C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ModuleParser\bin\Debug\ModuleParser.dll
+C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ModuleParser\bin\Debug\ModuleParser.pdb
+C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ModuleParser\obj\Debug\ModuleParser.dll
+C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ModuleParser\obj\Debug\ModuleParser.pdb
+C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ModuleParser\obj\Debug\ModuleParser.csprojResolveAssemblyReference.cache

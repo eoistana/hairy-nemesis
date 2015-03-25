@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Module name="Core.Types"
+        xmlns="engine">
+  <SimpleType name="int" cstype="int"/>
+  <SimpleType name="long" cstype="long"/>
+  <SimpleType name="double" cstype="double"/>
+  <SimpleType name="string" cstype="string"/>
+  <SimpleType name="bool" cstype="bool"/>
+
+  <SimpleType name="Vector" cstype="Vector"/>
+
+  <Enum name="EdgeType" flags="true">
+    <Value name="None" value="0x0000"/>
+    <Value name="BlockingPassage" value="0x0001"/>
+    <Value name="BlockingView" value="0x0002"/>
+    <Value name="BlockingLight" value="0x0004"/>
+  </Enum>
+
+
+</Module>

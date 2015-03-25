@@ -1,0 +1,303 @@
+﻿<#@ template language="C#" hostspecific="True" debug="true"
+#><#@include file="..\Configuration\Manager.ttinclude"
+#><#@ assembly name="C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ModuleParser\bin\Debug\ModuleParser.dll"
+#><#@ assembly name="System.Core"
+#><#@ import namespace="ModulesParser"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.Linq"
+#><# var manager = Manager.Create(Host, GenerationEnvironment); 
+var configpath = Path.GetDirectoryName(Host.TemplateFile);
+var parser = new ModuleParser(configpath + "\\..\\Configuration\\CorePackage.xml");
+parser.ValidateReferences();
+
+#><# manager.StartHeader(); 
+#>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Normalized;
+using Normalized.Maths;
+
+namespace Modules.Engine
+{
+<# manager.EndBlock(); 
+foreach(var d in parser.Data.Values)
+{
+	manager.StartNewFile(string.Format("{0}.generated.cs", d.Name)); #>
+	public partial class <#=d.Name#><#=d.GetBase()#>
+	{
+<#=d.GetFieldDeclarations("		")
+#><#=d.GetListDeclarations("		")
+#><#=d.GetArrayDeclarations("		")
+#>
+<#="\t"#>	public <#=d.Name#>(<#=d.GetCtorParams()#>)<#=d.GetBaseCtor()#>
+		{
+<#
+	foreach(var k in d.Keys.Values)
+	{#>
+			this.<#=k.Ref#> = <#=k.GetName()#>;
+<#
+	}
+	foreach(var k in d.Required.Values)
+	{#>
+			this.<#=k.Ref#> = <#=k.GetName()#>;
+<#
+	}
+	foreach(var f in d.Fields.Values.Where(v=>v.Default!=null))
+	{#>
+			this.<#=f.Name#> = <#=f.Default#>;
+<#	}
+#>			On<#=d.Name#>Init();
+		}
+
+		partial void On<#=d.Name#>Init();
+<#
+	if(d.Lists.Count>0)
+	{#>
+
+		#region List access
+<#
+	}
+	foreach(var l in d.Lists.Values)
+	{
+#>
+
+		protected readonly object <#=l.Name#>SyncRoot = new object();
+		public void Add<#=l.Name#>(<#=l.ListElement.GetTypeName()#> <#=l.ListElement.GetName()#>)
+		{
+			lock (this.<#=l.Name#>SyncRoot)
+			{
+				if (this.<#=l.Name#> == null) this.<#=l.Name#> = new List<<#=l.ListElement.GetTypeName()#>>();
+				this.<#=l.Name#>.Add(<#=l.ListElement.GetName()#>);
+<#		if(l.IsExtendedProperty(d))
+		{
+#>				<#=l.ListElement.GetName()#>.<#=(l.ListElement as DataRefParser).DataType.Extends[d.Name].ParentVar#> = this;
+<#
+		}
+#>			}
+		}
+
+		internal void Remove<#=l.Name#>(<#=l.ListElement.GetTypeName()#> <#=l.ListElement.GetName()#>)
+		{
+			lock (this.<#=l.Name#>SyncRoot)
+			{
+				this.<#=l.Name#>.Remove(<#=l.ListElement.GetName()#>);
+				if (!this.<#=l.Name#>.Any()) this.<#=l.Name#> = null;
+<#		if(l.IsExtendedProperty(d))
+		{
+#>				<#=l.ListElement.GetName()#>.<#=(l.ListElement as DataRefParser).DataType.Extends[d.Name].ParentVar#> = null;
+<#
+		}
+#>			}
+		}
+<#	}#>
+<#
+	if(d.Lists.Count>0)
+	{#>
+		#endregion
+<#
+	}
+	if(parser.Events.Count>0)
+	{#>
+
+		#region Events
+<#
+	}
+	foreach(var e in parser.Events.Values)
+	{#>
+
+		public <# if(d.Base==null) {#>virtual<#}else{#>override<#}#> void <#=e.Name#>(<#=e.Name#>EventParameters e)
+		{
+<#		if(d.Base!=null)
+		{#>
+			base.<#=e.Name#>(e);
+<#
+		}#>
+			var p = new <#=e.Name#>EventParameters(e);
+<#		if(d.Events.ContainsKey(e.Name))
+		{
+			var ev = d.Events[e.Name];
+			foreach(var proc in ev.Processes.Values)
+			{
+#>			<#=proc.Name#>Message <#=e.Name#><#=proc.Name#>Message;
+			if(<#=proc.Name#>Messages.TryPop(out <#=e.Name#><#=proc.Name#>Message))
+				OnProcess<#=e.Name#><#=proc.Name#>Message(<#=e.Name#><#=proc.Name#>Message);
+<#			}
+#>			On<#=e.Name#>(p);
+<#		}
+#>			if(p.Continue)
+			{
+<#
+		foreach(var f in d.Fields.Values)
+		{
+			if(f.ImplementsEvent(e.Name))
+			{#>
+				if(<#=f.Name#> != null) <#=f.Name#>.<#=e.Name#>(p);
+<#			}
+		}
+		foreach(var l in d.Lists.Values)
+		{
+			if(l.ImplementsEvent(e.Name))
+			{#>
+				<#=l.ListElement.GetTypeName()#>[] <#=l.Name#>Copy = null;
+				lock(<#=l.Name#>SyncRoot)
+				{
+					if(<#=l.Name#> != null) 
+						<#=l.Name#>Copy = <#=l.Name#>.ToArray();
+				}
+				if (<#=l.Name#>Copy != null) Parallel.ForEach(<#=l.Name#>Copy, x => { if (x != null)x.<#=e.Name#>(p); });
+<#			}
+		}
+		foreach(var a in d.Arrays.Values)
+		{
+			if(a.ImplementsEvent(e.Name))
+			{#>
+				if (<#=a.Name#> != null)
+					<#=a.GetEventCaller("						",0)#>y => { var a = <#=a.Name#>[<#=a.GetEventLooper(0)#>]; if(a != null) a.<#=e.Name#>(p); }<#=a.GetEventClosure(0)#>;
+<#			}
+		}#>
+			}
+		}
+
+<#
+	}
+	foreach(var e in d.Events.Values)
+	{#>
+		partial void On<#=e.Name#>(<#=e.Name#>EventParameters e);
+<#		foreach(var proc in e.Processes.Values)
+		{
+#>		partial void OnProcess<#=e.Name#><#=proc.Name#>Message(<#=proc.Name#>Message <#=e.Name#><#=proc.Name#>Message);
+<#		}
+	}
+	if(parser.Events.Count>0)
+	{#>
+		#endregion
+<#
+	}#>
+
+<#
+	if(d.Messages.Count>0)
+	{#>
+		#region Messages
+
+<#
+		foreach(var m in d.Messages.Values)
+		{
+			if(m.Handled == MessageHandler.ByEvent)
+			{#>
+		protected ConcurrentQueue<<#=m.Name#>Message> <#=m.Name#>Messages = new ConcurrentQueue<<#=m.Name#>Message>();
+		public void Register<#=m.Name#>Message(<#=m.Name#>Message message)
+		{
+			<#=m.Name#>Messages.Push(message);
+		}
+<#
+			}
+			else
+			{#>
+		partial void OnProcess<#=m.Name#>Message(<#=m.Name#>Message message);
+		public void Register<#=m.Name#>Message(<#=m.Name#>Message message)
+		{
+			OnProcess<#=m.Name#>Message(message);
+		}
+<#			}
+		}
+	#>
+		#endregion
+<#
+	}#>
+	}
+<# manager.EndBlock();
+}
+foreach(var e in parser.Events.Values)
+{
+	manager.StartNewFile(string.Format("{0}EventParameters.generated.cs", e.Name)); #>
+	public partial class <#=e.Name#>EventParameters
+	{
+		public bool Continue;
+<#
+	foreach(var p in e.Parameters.Values)
+	{
+#>		public <#=p.GetDeclaration()#>;
+<#	}
+#>
+
+		public <#=e.Name#>EventParameters(<#=string.Join(", ", e.Parameters.Values.Select(p=>p.Type + " " + p.GetName()))#>)
+		{
+<#
+	foreach(var p in e.Parameters.Values)
+	{
+#>			this.<#=p.Name#> = <#=p.GetName()#>;
+<#
+	}
+#>		}
+
+		public <#=e.Name#>EventParameters(<#=e.Name#>EventParameters e)
+		{
+			Continue = e.Continue;
+<#
+	foreach(var p in e.Parameters.Values)
+	{
+#>			<#=p.Name#> = e.<#=p.Name#>;
+<#
+	}
+#>		}
+
+	}
+<#
+	manager.EndBlock();
+}
+foreach(var m in parser.Messages.Values)
+{
+	manager.StartNewFile(string.Format("{0}Message.generated.cs", m.Name)); #>
+	public partial class <#=m.Name#>Message
+	{
+<#
+	foreach(var p in m.Parameters.Values)
+	{
+#>		public <#=p.Type#> <#=p.Name#>;
+<#	}
+#>
+
+		public <#=m.Name#>Message(<#=string.Join(", ", m.Parameters.Values.Select(p=>p.Type + " " + p.Name))#>)
+		{
+<#
+	foreach(var p in m.Parameters.Values)
+	{
+#>			this.<#=p.Name#> = <#=p.Name#>;
+<#
+	}
+#>		}
+
+	}
+<#
+	manager.EndBlock();
+}
+
+
+foreach(var e in parser.Enums.Values)
+{
+	manager.StartNewFile(string.Format("{0}.generated.cs", e.Name));
+	if(e.Flags){
+#>	[Flags]
+<#}#>
+	public enum <#=e.Name#>
+	{
+<#
+	foreach(var v in e.EnumValues.Values)
+	{
+#>		<#=v.Name#><#=v.Value!=null?" = " + v.Value:""#>,
+<#
+	}
+#>
+	}
+<#
+	manager.EndBlock();
+}
+
+manager.StartFooter();
+#>
+}
+<#
+	manager.EndBlock();
+manager.Process(true);
+ #>

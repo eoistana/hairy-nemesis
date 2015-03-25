@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml;
+
+namespace ModulesParser
+{
+  public class FieldRefParser : Parser
+  {
+    public FieldRefParser(string name, XmlNode node)
+      : base(name, node)
+    {
+    }
+
+  }
+}

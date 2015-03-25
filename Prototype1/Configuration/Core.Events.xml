@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Module name="Core.Events" xmlns="engine">
+  <Event name="Tick">
+    <Parameter name="Time" type="long"/>
+  </Event>
+  <Event name="Collide">
+    <Parameter name="Entity" type="Entity"/>
+    <Parameter name="X" type="double"/>
+    <Parameter name="Y" type="double"/>
+  </Event>
+  <Event name="PositionChanged">
+    
+  </Event>
+</Module>
