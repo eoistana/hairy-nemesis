@@ -4,3 +4,9 @@ C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Server\
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Server\obj\Debug\Server.dll
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Server\obj\Debug\Server.pdb
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Server\bin\Debug\Server.dll.config
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Server\bin\Debug\Server.dll
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Server\bin\Debug\Server.pdb
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Server\obj\Debug\Server.dll
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Server\obj\Debug\Server.pdb

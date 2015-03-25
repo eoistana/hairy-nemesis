@@ -8,3 +8,13 @@ C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Configu
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Configuration\obj\Debug\Configuration.csprojResolveAssemblyReference.cache
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Configuration\obj\Debug\Configuration.dll
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Configuration\obj\Debug\Configuration.pdb
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Configuration\bin\Debug\Core.Entities.xml
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Configuration\bin\Debug\Core.Types.xml
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Configuration\bin\Debug\Core.xml
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Configuration\bin\Debug\CorePackage.xml
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Configuration\bin\Debug\engine.xsd
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Configuration\bin\Debug\Configuration.dll
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Configuration\bin\Debug\Configuration.pdb
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Configuration\obj\Debug\Configuration.csprojResolveAssemblyReference.cache
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Configuration\obj\Debug\Configuration.dll
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Configuration\obj\Debug\Configuration.pdb

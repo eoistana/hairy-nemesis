@@ -3,3 +3,8 @@ C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Normali
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Normalized\obj\Debug\Normalized.dll
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Normalized\obj\Debug\Normalized.pdb
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Normalized\obj\Debug\Normalized.csprojResolveAssemblyReference.cache
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Normalized\obj\Debug\Normalized.csprojResolveAssemblyReference.cache
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Normalized\obj\Debug\Normalized.dll
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Normalized\obj\Debug\Normalized.pdb
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Normalized\bin\Debug\Normalized.dll
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\Normalized\bin\Debug\Normalized.pdb

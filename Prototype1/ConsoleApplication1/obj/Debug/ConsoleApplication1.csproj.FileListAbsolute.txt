@@ -12,3 +12,17 @@ C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Console
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ConsoleApplication1\bin\Debug\Normalized.pdb
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ConsoleApplication1\bin\Debug\Client.pdb
 C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ConsoleApplication1\bin\Debug\Client.exe
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\bin\Debug\Client.exe
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\bin\Debug\Engine.dll
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\bin\Debug\Normalized.dll
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\bin\Debug\Shared.dll
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\bin\Debug\Client.pdb
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\bin\Debug\Engine.pdb
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\bin\Debug\Normalized.pdb
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\bin\Debug\Shared.pdb
+C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache

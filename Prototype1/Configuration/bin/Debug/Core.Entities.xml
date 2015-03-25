@@ -33,12 +33,15 @@
     </Messages>
   </Data>
 
+  <Data name="Actor" base="MobileEntity">
+    
+  </Data>
 
-  <Data name="Player" base="MobileEntity">
+  <Data name="Player" base="Actor">
 
   </Data>
 
-  <Data name="Ai" base="MobileEntity">
+  <Data name="Ai" base="Actor">
   </Data>
   
 </Module>
