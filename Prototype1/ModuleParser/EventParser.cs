@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using ModuleParser;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses and Event element
+  /// </summary>
   public class EventParser : Parser
   {
     public Dictionary<string, ParameterParser> Parameters = new Dictionary<string, ParameterParser>();

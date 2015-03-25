@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a reference to an Enum element
+  /// </summary>
   public class EnumRefParser : Parser, IDeclaration
   {
     public string Type;

@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a Process element
+  /// </summary>
   public class ProcessParser : Parser
   {
     public string Message;

@@ -1,4 +1,0 @@
-C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Shared\bin\Debug\Shared.dll
-C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Shared\bin\Debug\Shared.pdb
-C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Shared\obj\Debug\Shared.dll
-C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Shared\obj\Debug\Shared.pdb

@@ -7,6 +7,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Base class for all the parsers
+  /// </summary>
   public abstract class Parser : IParser
   {
     public string Name;

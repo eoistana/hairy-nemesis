@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ModuleParser;
 using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a Message element
+  /// </summary>
   public class MessageParser : Parser
   {
     public bool ExposedToClient;

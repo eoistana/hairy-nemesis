@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using ModuleParser;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a Data element
+  /// </summary>
   public class DataParser : Parser, IDeclaration
   {
     public string Base;

@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a SimpleType element
+  /// </summary>
   public class SimpleTypeParser : Parser, IDeclaration
   {
     public string CsType;

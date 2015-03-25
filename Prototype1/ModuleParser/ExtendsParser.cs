@@ -11,6 +11,10 @@ namespace ModulesParser
     Field,
     List
   }
+
+  /// <summary>
+  /// Parses an Extends element
+  /// </summary>
   public class ExtendsParser : Parser
   {
     public string Ref;

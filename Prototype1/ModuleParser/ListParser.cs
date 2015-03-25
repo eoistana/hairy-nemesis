@@ -13,6 +13,9 @@ namespace ModulesParser
     Dictionary
   }
 
+  /// <summary>
+  /// Parses a List element
+  /// </summary>
   public class ListParser : Parser, IDeclaration
   {
     public ListType Type;

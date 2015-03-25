@@ -9,6 +9,9 @@ using System.Xml.Schema;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses the top level Module element
+  /// </summary>
   public class ModuleParser
   {
     public string Filename;
@@ -24,6 +27,10 @@ namespace ModulesParser
     
     internal XmlNamespaceManager NsMan;
 
+    /// <summary>
+    /// Create, load and parse the module
+    /// </summary>
+    /// <param name="filename"></param>
     public ModuleParser(string filename)
     {
       this.Filename = filename;
@@ -31,6 +38,9 @@ namespace ModulesParser
       Doc = Parse(filename, ref mp);
     }
 
+    /// <summary>
+    /// Make connections to referenced types
+    /// </summary>
     public void ValidateReferences()
     {
       foreach (var d in Data.Values) d.ValidateReferences(SimpleTypes, Data, Enums, Events, Messages);
@@ -38,6 +48,12 @@ namespace ModulesParser
       foreach (var m in Messages.Values) m.ValidateReferences(SimpleTypes, Data, Enums, Events, Messages);
     }
 
+    /// <summary>
+    /// Load the document and parse the xml into objects.
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="moduleParser"></param>
+    /// <returns></returns>
     internal static XmlDocument Parse(string filename, ref ModuleParser moduleParser)
     {
       if (moduleParser == null) moduleParser = new ModuleParser(filename);

@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a Field element
+  /// </summary>
   public class FieldParser : Parser, IDeclaration
   {
     public string Type;

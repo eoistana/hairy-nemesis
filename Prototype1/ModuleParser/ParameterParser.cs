@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a Parameter element
+  /// </summary>
   public class ParameterParser : Parser, IDeclaration
   {
     public string Type;

@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses an Array element
+  /// </summary>
   public class ArrayParser : Parser, IDeclaration
   {
     public IDeclaration ListElement;

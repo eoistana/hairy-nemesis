@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a Required element
+  /// </summary>
   class RequiredParser : Parser, IDeclaration
   {
     public string Ref;

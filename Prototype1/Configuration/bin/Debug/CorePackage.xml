@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<Module name="CorePackage" xmlns="engine">
-  <Using module="Core"/>
-  <Using module="Core.Entities"/>
-</Module>

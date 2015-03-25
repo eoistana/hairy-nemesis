@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a Key element
+  /// </summary>
   public class KeyParser : Parser, IDeclaration
   {
     public string Ref;

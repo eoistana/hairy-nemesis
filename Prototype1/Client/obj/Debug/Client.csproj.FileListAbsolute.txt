@@ -1,5 +1,0 @@
-C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Client\bin\Debug\Client.pdb
-C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Client\obj\Debug\Client.pdb
-C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Client\bin\Debug\Client.exe.config
-C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Client\bin\Debug\Client.exe
-C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\Client\obj\Debug\Client.exe

@@ -7,6 +7,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a Using element
+  /// </summary>
   public class UsingParser : Parser
   {
     public XmlDocument Doc;

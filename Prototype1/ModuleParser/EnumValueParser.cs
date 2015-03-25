@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses an enum value
+  /// </summary>
   public class EnumValueParser : Parser
   {
     public string Value;

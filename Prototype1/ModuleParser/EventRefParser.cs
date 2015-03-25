@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using ModuleParser;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a reference to an Event element
+  /// </summary>
   public class EventRefParser : Parser
   {
     public string Ref;

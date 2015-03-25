@@ -12,6 +12,9 @@ namespace ModulesParser
     Directly
   }
 
+  /// <summary>
+  /// Parses a reference to a Message element
+  /// </summary>
   public class MessageRefParser : Parser
   {
     public string Ref;

@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace ModulesParser
 {
+  /// <summary>
+  /// Parses a reference to a Data element
+  /// </summary>
   public class DataRefParser : Parser, IDeclaration
   {
     public string Ref;
