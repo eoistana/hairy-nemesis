@@ -7,6 +7,7 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+	
 	public partial class PositionChangedEventParameters
 	{
 		public bool Continue;

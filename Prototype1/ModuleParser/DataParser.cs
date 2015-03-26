@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -15,6 +16,7 @@ namespace ModulesParser
     public string Base;
     public DataParser BaseRef;
 
+    public SummaryParser Summary;
     public Dictionary<string, ExtendsParser> Extends = new Dictionary<string, ExtendsParser>();
     public Dictionary<string, FieldParser> Fields = new Dictionary<string, FieldParser>();
     public Dictionary<string, ListParser> Lists = new Dictionary<string, ListParser>();
@@ -32,6 +34,7 @@ namespace ModulesParser
 
     internal void ParseData(ModuleParser moduleParser)
     {
+      Summary = SummaryParser.Parse(moduleParser, this);
       Parse(moduleParser, this, Extends, "./en:Extends", "ref");
       Parse(moduleParser, this, Fields, "./en:Field");
       Parse(moduleParser, this, Lists, "./en:List");
@@ -130,7 +133,7 @@ namespace ModulesParser
 
     public string GetFieldDeclarations(string tabs)
     {
-      var field = string.Join("\n" + tabs, Fields.Values.Select(f => f.GetPublicDeclaration()));
+      var field = string.Join("\n" + tabs, Fields.Values.Select(f => f.GetSummary(tabs) + "\n" + tabs + f.GetPublicDeclaration()));
       return field.Length > 0 ? tabs + field + "\n" : "";
     }
 
@@ -142,7 +145,7 @@ namespace ModulesParser
 
     public string GetArrayDeclarations(string tabs)
     {
-      var arr = string.Join("\n" + tabs, Arrays.Values.Select(a => a.GetPublicDeclaration()));
+      var arr = string.Join("\n" + tabs, Arrays.Values.Select(a => a.GetSummary(tabs) + "\n" + tabs + a.GetPublicDeclaration()));
       return arr.Length > 0 ? tabs + arr + "\n" : "";
     }
 
@@ -177,6 +180,25 @@ namespace ModulesParser
           (k.RefDeclaration as DataParser).GetKeyNamesAndTypes(prefix) : 
           new Dictionary<string, string> { { prefix + k.RefDeclaration.GetName(), k.RefDeclaration.GetTypeName() } })
         ).ToDictionary(k=>k.Key, v=>v.Value);
+    }
+
+    public string GetSummary(string tabs)
+    {
+      return GetSummary(tabs, Summary != null ? Summary.Summary : null);
+    }
+
+    public static string GetSummary(string tabs, string summary)
+    {
+      if (summary != null)
+      {
+        var reg = new Regex("\n\\s*");
+        summary = reg.Replace(summary, "\n");
+        var separator = "\n" + tabs + "/// ";
+        return string.Format(@"/// <summary>
+{0}/// {1}
+{0}/// </summary>", tabs, string.Join(separator, summary.Split('\n')));
+      }
+      return "";
     }
   }
 

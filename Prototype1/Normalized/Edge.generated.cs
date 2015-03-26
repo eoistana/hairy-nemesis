@@ -7,10 +7,14 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+
 	public partial class Edge
 	{
+		
 		public Vector Vector;
+		
 		public double Height;
+		
 		public EdgeType Type;
 
 		public Edge(Vector vector, double height)

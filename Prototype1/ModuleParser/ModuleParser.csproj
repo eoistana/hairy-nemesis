@@ -60,6 +60,7 @@
     <Compile Include="ProcessParser.cs" />
     <Compile Include="RequiredParser.cs" />
     <Compile Include="SimpleTypeParser.cs" />
+    <Compile Include="SummaryParser.cs" />
     <Compile Include="UsingParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

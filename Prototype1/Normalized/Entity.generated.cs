@@ -7,8 +7,10 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+
 	public partial class Entity : CellContainer
 	{
+		
 		public string Name;
 
 		public Entity(int id, int width, int height, string name) : base(id, width, height)

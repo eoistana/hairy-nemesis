@@ -17,6 +17,10 @@
   </Data>
 
   <Data name="MobileEntity" base="Entity">
+    <Summary>
+      Base class of any entity that can move
+    </Summary>
+    
     <Field name="Heading" type="double" default="Math.PI"/>
     <Field name="Speed" type="double"/>
     <Field name="MovementType" type="MovementType"/>
@@ -34,14 +38,21 @@
   </Data>
 
   <Data name="Actor" base="MobileEntity">
-    
+    <Summary>
+      Base class for objects that can post commands
+    </Summary>
   </Data>
 
   <Data name="Player" base="Actor">
-
+    <Summary>
+      The serverside object of the player
+    </Summary>
   </Data>
 
   <Data name="Ai" base="Actor">
+    <Summary>
+      Base class of the AI system
+    </Summary>
   </Data>
   
 </Module>

@@ -7,8 +7,10 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+
 	public partial class CellType
 	{
+		
 		public int Id;
 
 		public CellType()

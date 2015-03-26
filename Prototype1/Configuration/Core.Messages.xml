@@ -1,17 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Module name="Core.Messages" xmlns="engine">
   <Using module="Core.Types"/>
+  
   <Message name="Move" expose="true">
+    <Summary>
+      Send this message to initiate a move to a location
+    </Summary>
     <Parameter name="X" type="double"/>
     <Parameter name="Y" type="double"/>
     <Parameter name="Speed" type="double"/>
   </Message>
+  
   <Message name="UpdatePosition" expose="true">
+    <Summary>
+      Send this message to set the position of an entity
+    </Summary>
     <Parameter name="Entity" type="Entity"/>
     <Parameter name="X" type="double"/>
     <Parameter name="Y" type="double"/>
   </Message>
+  
   <Message name="Turn" expose="true">
-    
+    <Summary>
+      Send this message to turn an entity
+    </Summary>
   </Message>
 </Module>

@@ -7,12 +7,25 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+/// <summary>
+	/// 
+	/// Base class of everything that can contain other things
+	/// For instance a map, a chest or an actor
+	/// 
+	/// </summary>
 	public partial class CellContainer : Cell
 	{
+		
 		public int Width;
+		
 		public int Height;
+		
 		public Shape Shape;
+		
 		public Position Position;
+		/// <summary>
+		/// 2-dimensional array of cells. Can be used as inventory.
+		/// </summary>
 		public Cell[,] Cells;
 
 		public CellContainer(int id, int width, int height) : base(id)

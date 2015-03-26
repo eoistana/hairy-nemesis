@@ -7,6 +7,11 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+/// <summary>
+	/// 
+	/// Base class of the AI system
+	/// 
+	/// </summary>
 	public partial class Ai : Actor
 	{
 

@@ -7,10 +7,20 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+/// <summary>
+	/// 
+	/// Base class of everything in the engine      
+	/// 
+	/// </summary>
 	public partial class Cell
 	{
+		/// <summary>
+		/// The main ID of the object
+		/// </summary>
 		public int Id;
+		
 		public double Scale;
+		
 		public CellType CellType;
 		public List<Entity> Entities;
 

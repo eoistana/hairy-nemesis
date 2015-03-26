@@ -18,6 +18,7 @@ namespace ModulesParser
 
     public IDeclaration Declaration;
     public string Default;
+    public string Description;
 
     public FieldParser(string name, XmlNode node):base(name,node)
     {
@@ -27,6 +28,7 @@ namespace ModulesParser
     {
       if (Node.Attributes["type"] != null) Type = Node.Attributes["type"].InnerText;
       if (Node.Attributes["default"] != null) Default = Node.Attributes["default"].InnerText;
+      Description = Node.Attributes["description"] != null ? Node.Attributes["description"].InnerText : null;
     }
 
     private bool validated = false;
@@ -84,5 +86,11 @@ namespace ModulesParser
     {
       return Name;
     }
+
+    internal string GetSummary(string tabs)
+    {
+      return DataParser.GetSummary(tabs, Description);
+    }
+
   }
 }

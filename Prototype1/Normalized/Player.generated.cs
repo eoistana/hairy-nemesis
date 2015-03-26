@@ -7,6 +7,11 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+/// <summary>
+	/// 
+	/// The serverside object of the player
+	/// 
+	/// </summary>
 	public partial class Player : Actor
 	{
 

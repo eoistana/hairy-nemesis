@@ -7,6 +7,9 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+	/// <summary>
+	/// Main game loop event
+	/// </summary>
 	public partial class TickEventParameters
 	{
 		public bool Continue;

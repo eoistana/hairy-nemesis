@@ -7,9 +7,12 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+
 	public partial class TypesList
 	{
+		
 		public int Id;
+		
 		public string Name;
 
 		public TypesList(int id)

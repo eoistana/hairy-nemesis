@@ -7,9 +7,12 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+
 	public partial class Line
 	{
+		
 		public Edge Point1;
+		
 		public Edge Point2;
 
 		public Line(Edge point1, Edge point2)

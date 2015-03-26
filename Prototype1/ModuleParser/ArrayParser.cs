@@ -12,6 +12,7 @@ namespace ModulesParser
   public class ArrayParser : Parser, IDeclaration
   {
     public IDeclaration ListElement;
+    public string Description;
 
     public ArrayParser(string name, XmlNode node): base(name, node)
     {
@@ -19,6 +20,8 @@ namespace ModulesParser
 
     public override void Parse(ModuleParser moduleParser, DataParser data)
     {
+      Description = Node.Attributes["description"] != null ? Node.Attributes["description"].InnerText : null;
+
       var element = Node.SelectSingleNode("./en:Element|./en:List|./en:Array", moduleParser.NsMan);
       var name = element.Attributes["name"] != null ? element.Attributes["name"].InnerText : null;
       var @ref = element.Attributes["ref"] != null ? element.Attributes["ref"].InnerText : null;
@@ -78,6 +81,11 @@ namespace ModulesParser
     internal string GetPublicDeclaration()
     {
       return "public " + GetDeclaration() + ";";
+    }
+
+    public string GetSummary(string tabs)
+    {
+      return DataParser.GetSummary(tabs, Description);
     }
 
     public string GetEventCaller(string tabs, int nesting, string arrName = null)

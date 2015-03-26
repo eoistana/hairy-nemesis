@@ -7,13 +7,20 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+
 	public partial class Shape
 	{
+		
 		public Position position;
+		
 		public bool edgesRecalculated;
+		
 		public bool boundingCircleRecalculated;
+		
 		public double boundingCircleRadiusSquared;
+		
 		public bool linesRecalculated;
+		
 		public ShapeDefinition Definition;
 		public List<Edge> edges;
 		public List<Line> lines;

@@ -7,6 +7,11 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+/// <summary>
+	/// 
+	/// Base class for objects that can post commands
+	/// 
+	/// </summary>
 	public partial class Actor : MobileEntity
 	{
 

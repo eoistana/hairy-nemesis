@@ -7,8 +7,10 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+
 	public partial class ShapeDefinition
 	{
+		
 		public double Height;
 		public List<Edge> Edges;
 

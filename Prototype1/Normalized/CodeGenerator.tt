@@ -1,6 +1,6 @@
 ﻿<#@ template language="C#" hostspecific="True" debug="true"
 #><#@include file="..\Configuration\Manager.ttinclude"
-#><#@ assembly name="C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ModuleParser\bin\Debug\ModuleParser.dll"
+#><#@ assembly name="C:\Users\Pluto\Documents\GitHub\hairy-nemesis\Prototype1\ModuleParser\bin\Debug\ModuleParser.dll"
 #><#@ assembly name="System.Core"
 #><#@ import namespace="ModulesParser"
 #><#@ import namespace="System.Collections.Generic"
@@ -24,6 +24,7 @@ namespace Modules.Engine
 foreach(var d in parser.Data.Values)
 {
 	manager.StartNewFile(string.Format("{0}.generated.cs", d.Name)); #>
+<#=d.GetSummary("	")#>
 	public partial class <#=d.Name#><#=d.GetBase()#>
 	{
 <#=d.GetFieldDeclarations("		")
@@ -211,6 +212,7 @@ foreach(var d in parser.Data.Values)
 foreach(var e in parser.Events.Values)
 {
 	manager.StartNewFile(string.Format("{0}EventParameters.generated.cs", e.Name)); #>
+	<#=e.GetSummary("	")#>
 	public partial class <#=e.Name#>EventParameters
 	{
 		public bool Continue;

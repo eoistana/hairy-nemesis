@@ -7,10 +7,18 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+/// <summary>
+	/// 
+	/// Base class of any entity that can move
+	/// 
+	/// </summary>
 	public partial class MobileEntity : Entity
 	{
+		
 		public double Heading;
+		
 		public double Speed;
+		
 		public MovementType MovementType;
 
 		public MobileEntity(int id, int width, int height, string name) : base(id, width, height, name)

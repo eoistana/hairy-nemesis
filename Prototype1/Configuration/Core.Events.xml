@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Module name="Core.Events" xmlns="engine">
-  <Event name="Tick">
+  <Event name="Tick" description="Main game loop event">
     <Parameter name="Time" type="long"/>
   </Event>
-  <Event name="Collide">
+  
+  <Event name="Collide" description="Notify other entity of a collision">
     <Parameter name="Entity" type="Entity"/>
     <Parameter name="X" type="double"/>
     <Parameter name="Y" type="double"/>
   </Event>
+  
   <Event name="PositionChanged">
     
   </Event>

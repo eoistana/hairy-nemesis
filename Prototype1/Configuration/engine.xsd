@@ -93,6 +93,7 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
+      <xs:element name="Summary" type="en:SummaryType" minOccurs="0" maxOccurs="1"/>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="Extends">
           <xs:annotation>
@@ -149,6 +150,18 @@
     </xs:attribute>
   </xs:complexType>
 
+  <xs:complexType name="SummaryType">
+    <xs:annotation>
+      <xs:documentation>
+        Adds a summary declaration to the generated class 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">        
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
   <xs:complexType name="EnumType">
     <xs:annotation>
       <xs:documentation>
@@ -172,6 +185,13 @@
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
+    <xs:attribute name="description" use="optional" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>
+          Description to be added as summary in the code
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="EnumValueType">
@@ -191,6 +211,13 @@
       <xs:annotation>
         <xs:documentation>
           Enumeration value
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="description" use="optional" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>
+          Description to be added as summary in the code
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
@@ -219,16 +246,26 @@
       </xs:element>
     </xs:sequence>
     <xs:attribute name="name" use="required" type="xs:NCName"/>
+    <xs:attribute name="description" use="optional" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>
+          Description to be added as summary in the code
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
   
   <xs:complexType name="MessageType">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="Parameter">
-        <xs:complexType>
-          <xs:attribute name="name" use="required" type="xs:NCName"/>
-          <xs:attribute name="type" use="required" type="xs:QName"/>
-        </xs:complexType>
-      </xs:element>
+    <xs:sequence>
+      <xs:element name="Summary" type="en:SummaryType" minOccurs="0" maxOccurs="1"/>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Parameter">
+          <xs:complexType>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="type" use="required" type="xs:QName"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
     </xs:sequence>
     <xs:attribute name="name" use="required" type="xs:NCName"/>
     <xs:attribute name="expose" use="optional" type="xs:boolean" default="false"/>
@@ -249,6 +286,13 @@
     </xs:attribute>
     <xs:attribute name="type" use="required" type="xs:QName"/>
     <xs:attribute name="default" use="optional" type="xs:string"/>
+    <xs:attribute name="description" use="optional" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>
+          Description to be added as summary in the code
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="ListType">
@@ -304,6 +348,13 @@
         </xs:restriction>
       </xs:simpleType>
     </xs:attribute>
+    <xs:attribute name="description" use="optional" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>
+          Description to be added as summary in the code
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="ArrayType">
@@ -321,6 +372,13 @@
       <xs:annotation>
         <xs:documentation>
           The name of the array, unique among fields, lists, arrays and enums to the containing data component
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="description" use="optional" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>
+          Description to be added as summary in the code
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>

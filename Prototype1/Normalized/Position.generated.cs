@@ -7,11 +7,16 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+
 	public partial class Position
 	{
+		
 		public double X;
+		
 		public double Y;
+		
 		public double Rotation;
+		
 		public CellContainer Parent;
 
 		public Position(double x, double y, double rotation)

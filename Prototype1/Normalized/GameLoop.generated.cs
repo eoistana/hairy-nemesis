@@ -7,9 +7,16 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+/// <summary>
+	/// 
+	/// The game loop
+	/// 
+	/// </summary>
 	public partial class GameLoop
 	{
+		
 		public long time;
+		
 		public bool quit;
 		public List<Map> Maps;
 

@@ -11,6 +11,7 @@ namespace ModulesParser
   /// </summary>
   public class EventParser : Parser
   {
+    public string Description;
     public Dictionary<string, ParameterParser> Parameters = new Dictionary<string, ParameterParser>();
 
     public EventParser(string name, XmlNode node):base(name,node)
@@ -19,6 +20,8 @@ namespace ModulesParser
 
     public override void Parse(ModuleParser moduleParser, DataParser data)
     {
+      Description = Node.Attributes["description"] != null ? Node.Attributes["description"].InnerText : null;
+
       Parse(moduleParser, data, Parameters, "./en:Parameter");
     }
 
@@ -29,6 +32,11 @@ namespace ModulesParser
       validated = true;
 
       foreach (var p in Parameters.Values) p.ValidateReferences(simpleTypes, data, enums, events, messages);
+    }
+
+    public string GetSummary(string tabs)
+    {
+      return DataParser.GetSummary(tabs, Description);
     }
   }
 }

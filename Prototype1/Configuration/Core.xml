@@ -8,6 +8,9 @@
   <Using module="Core.Events"/>
 
   <Data name="GameLoop">
+    <Summary>
+      The game loop
+    </Summary>
     <List name="Maps" type="List">
       <Element name="map" type="Map"/>
     </List>
@@ -16,10 +19,14 @@
   </Data>
   
   <Data name="Cell">
-    <Field name="Id" type="int"/>
+    <Summary>
+      Base class of everything in the engine      
+    </Summary>
+    
+    <Field name="Id" type="int" description="The main ID of the object"/>
     <Field name="Scale" type="double" default="1"/>
     <Field name="CellType" type="CellType"/>
-    <List name="Entities" type="List">
+    <List name="Entities" type="List" description="List of owned entities. For instance when this cell is map piece.">
       <Element name="enity" type="Entity"/>
     </List>
     <Key>
@@ -32,9 +39,13 @@
   </Data>
 
   <Data name="CellContainer" base="Cell">
+    <Summary>
+      Base class of everything that can contain other things
+      For instance a map, a chest or an actor
+    </Summary>
     <Field name="Width" type="int"/>
     <Field name="Height" type ="int"/>
-    <Array name="Cells">
+    <Array name="Cells" description="2-dimensional array of cells. Can be used as inventory.">
       <Array>
         <Element name="cell" type="Cell"/>
       </Array>

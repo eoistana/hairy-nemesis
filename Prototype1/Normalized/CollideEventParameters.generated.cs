@@ -7,6 +7,9 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
+	/// <summary>
+	/// Notify other entity of a collision
+	/// </summary>
 	public partial class CollideEventParameters
 	{
 		public bool Continue;
