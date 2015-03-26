@@ -7,7 +7,7 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
-/// <summary>
+	/// <summary>
 	/// 
 	/// Base class of the AI system
 	/// 

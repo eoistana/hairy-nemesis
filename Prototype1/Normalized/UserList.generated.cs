@@ -7,38 +7,40 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
-	
-	public partial class ShapeDefinition
+	/// <summary>
+	/// 
+	/// Singleton class for the list of users
+	/// 
+	/// </summary>
+	public partial class UserList
 	{
-		
-		public double Height;
-		public List<Edge> Edges;
+		public List<User> Users;
 
-		public ShapeDefinition()
+		public UserList()
 		{
-			OnShapeDefinitionInit();
+			OnUserListInit();
 		}
 
-		partial void OnShapeDefinitionInit();
+		partial void OnUserListInit();
 
 		#region List access
 
-		protected readonly object EdgesSyncRoot = new object();
-		public void AddEdges(Edge edge)
+		protected readonly object UsersSyncRoot = new object();
+		public void AddUsers(User user)
 		{
-			lock (this.EdgesSyncRoot)
+			lock (this.UsersSyncRoot)
 			{
-				if (this.Edges == null) this.Edges = new List<Edge>();
-				this.Edges.Add(edge);
+				if (this.Users == null) this.Users = new List<User>();
+				this.Users.Add(user);
 			}
 		}
 
-		internal void RemoveEdges(Edge edge)
+		internal void RemoveUsers(User user)
 		{
-			lock (this.EdgesSyncRoot)
+			lock (this.UsersSyncRoot)
 			{
-				this.Edges.Remove(edge);
-				if (!this.Edges.Any()) this.Edges = null;
+				this.Users.Remove(user);
+				if (!this.Users.Any()) this.Users = null;
 			}
 		}
 		#endregion

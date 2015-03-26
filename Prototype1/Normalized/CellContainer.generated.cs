@@ -7,7 +7,7 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
-/// <summary>
+	/// <summary>
 	/// 
 	/// Base class of everything that can contain other things
 	/// For instance a map, a chest or an actor

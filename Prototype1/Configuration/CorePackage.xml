@@ -2,4 +2,5 @@
 <Module name="CorePackage" xmlns="engine">
   <Using module="Core"/>
   <Using module="Core.Entities"/>
+  <Using module="Core.Authentification"/>
 </Module>

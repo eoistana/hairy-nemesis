@@ -1,6 +1,6 @@
 ﻿<#@ template language="C#" hostspecific="True" debug="true"
 #><#@include file="..\Configuration\Manager.ttinclude"
-#><#@ assembly name="C:\Users\Pluto\Documents\Visual Studio 2012\Projects\ConsoleApplication4\ModuleParser\bin\Debug\ModuleParser.dll"
+#><#@ assembly name="$(SolutionDir)\ModuleParser\bin\Debug\ModuleParser.dll"
 #><#@ assembly name="System.Core"
 #><#@ import namespace="ModulesParser"
 #><#@ import namespace="System.Collections.Generic"

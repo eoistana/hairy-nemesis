@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Module name="Core.Authentification"
+        xmlns="engine"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Data name="Character">
+    <Field name="Name" type="string"/>
+    <Key>
+      <FieldRef ref="Name"/>
+    </Key>
+  </Data>
+
+  <Data name="User">
+    <Field name="Name" type="string" description="The username"/>
+    <Field name="Password" type="string" description="The password. Stored in plain text for now."/>
+
+    <List name="Characters" type="Dictionary" description="The list of characters">
+      <Element name="character" type="Character"/>
+    </List>
+    <Required>
+      <FieldRef ref="Password"/>
+    </Required>
+    <Key>
+      <FieldRef ref="Name"/>
+    </Key>
+  </Data>
+
+  <Data name="UserList">
+    <Summary>
+      Singleton class for the list of users
+    </Summary>
+    <List name="Users" type="Dictionary">
+      <Element name="user" type="User"/>
+    </List>
+  </Data>
+</Module>

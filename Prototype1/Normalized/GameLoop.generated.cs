@@ -7,7 +7,7 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
-/// <summary>
+	/// <summary>
 	/// 
 	/// The game loop
 	/// 

@@ -8,40 +8,18 @@ using Normalized.Maths;
 namespace Modules.Engine
 {
 	
-	public partial class ShapeDefinition
+	public partial class Character
 	{
 		
-		public double Height;
-		public List<Edge> Edges;
+		public string Name;
 
-		public ShapeDefinition()
+		public Character(string name)
 		{
-			OnShapeDefinitionInit();
+			this.Name = name;
+			OnCharacterInit();
 		}
 
-		partial void OnShapeDefinitionInit();
-
-		#region List access
-
-		protected readonly object EdgesSyncRoot = new object();
-		public void AddEdges(Edge edge)
-		{
-			lock (this.EdgesSyncRoot)
-			{
-				if (this.Edges == null) this.Edges = new List<Edge>();
-				this.Edges.Add(edge);
-			}
-		}
-
-		internal void RemoveEdges(Edge edge)
-		{
-			lock (this.EdgesSyncRoot)
-			{
-				this.Edges.Remove(edge);
-				if (!this.Edges.Any()) this.Edges = null;
-			}
-		}
-		#endregion
+		partial void OnCharacterInit();
 
 		#region Events
 
