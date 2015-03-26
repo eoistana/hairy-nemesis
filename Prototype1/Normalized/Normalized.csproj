@@ -54,6 +54,9 @@
     <Compile Include="CellType.generated.cs">
       <DependentUpon>CodeGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="Character.generated.cs">
+      <DependentUpon>CodeGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="CollideEventParameters.generated.cs">
       <DependentUpon>CodeGenerator.tt</DependentUpon>
     </Compile>
@@ -82,6 +85,9 @@
       <DependentUpon>CodeGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="Line.generated.cs">
+      <DependentUpon>CodeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginUserMessage.generated.cs">
       <DependentUpon>CodeGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="Map.generated.cs">
@@ -128,6 +134,12 @@
       <DependentUpon>CodeGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="UpdatePositionMessage.generated.cs">
+      <DependentUpon>CodeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.generated.cs">
+      <DependentUpon>CodeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserList.generated.cs">
       <DependentUpon>CodeGenerator.tt</DependentUpon>
     </Compile>
   </ItemGroup>

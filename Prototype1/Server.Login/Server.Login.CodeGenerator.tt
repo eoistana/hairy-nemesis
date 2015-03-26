@@ -1,0 +1,88 @@
+﻿<#@ template language="C#" hostspecific="True" debug="true"
+#><#@include file="..\Configuration\Manager.ttinclude"
+#><#@ assembly name="$(SolutionDir)\ModuleParser\bin\Debug\ModuleParser.dll"
+#><#@ assembly name="System.Core"
+#><#@ import namespace="ModulesParser"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.Linq"
+#><# var manager = Manager.Create(Host, GenerationEnvironment); 
+var configpath = Path.GetDirectoryName(Host.TemplateFile);
+var parser = new ModuleParser(configpath + "\\..\\Configuration\\Core.Authentification.xml");
+parser.ValidateReferences();
+
+#><# manager.StartHeader(); 
+#>using System;
+using System.Collections.Generic;
+using System.ServiceModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Runtime.Serialization;
+
+namespace Server
+{
+<#
+foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient))
+{
+	manager.StartNewFile(string.Format("{0}Message.generated.cs", m.Name)); #>
+	[DataContract]
+	public partial class <#=m.Name#>Message
+	{
+<#
+	foreach(var p in m.Parameters.Values)
+	{
+		foreach(var k in p.GetServiceType(p.Name))
+		{
+#>		[DataMember] public <#=k.Value#> <#=k.Key#>;
+<#		}
+	}
+#>
+
+<#		if(m.Parameters.Values.SelectMany(p=>p.GetServiceType(p.Name)).Count()>0){#>
+		public <#=m.Name#>Message(){}
+<#		}#>
+		public <#=m.Name#>Message(<#=string.Join(", ", m.Parameters.Values.SelectMany(p=>p.GetServiceType(p.Name)).Select(k=>k.Value + " " + k.Key))#>)
+		{
+<#
+	foreach(var p in m.Parameters.Values)
+	{
+		foreach(var k in p.GetServiceType(p.Name))
+		{
+#>			this.<#=k.Key#> = <#=k.Key#>;
+<#
+		}
+	}
+#>		}
+
+	}
+<#
+	manager.EndBlock();
+}
+
+
+foreach(var e in parser.Enums.Values)
+{
+	manager.StartNewFile(string.Format("{0}.generated.cs", e.Name));
+	if(e.Flags){
+#>	[Flags]
+<#}#>
+	public enum <#=e.Name#>
+	{
+<#
+	foreach(var v in e.EnumValues.Values)
+	{
+#>		<#=v.Name#><#=v.Value!=null?" = " + v.Value:""#>,
+<#
+	}
+#>
+	}
+<#
+	manager.EndBlock();
+}
+
+manager.StartFooter();
+#>
+}
+<#
+	manager.EndBlock();
+manager.Process(true);
+ #>

@@ -14,10 +14,15 @@ namespace Modules.Engine
 	/// </summary>
 	public partial class UserList
 	{
+		/// <summary>
+		/// This class is a singleton, only use Id=0
+		/// </summary>
+		public int Id;
 		public List<User> Users;
 
-		public UserList()
+		public UserList(int id)
 		{
+			this.Id = id;
 			OnUserListInit();
 		}
 
@@ -75,5 +80,13 @@ namespace Modules.Engine
 
 		#endregion
 
+		#region Messages
+
+		partial void OnProcessLoginUserMessage(LoginUserMessage message);
+		public void RegisterLoginUserMessage(LoginUserMessage message)
+		{
+			OnProcessLoginUserMessage(message);
+		}
+		#endregion
 	}
 }

@@ -2,6 +2,7 @@
 <Module name="Core.Authentification"
         xmlns="engine"
         xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Using module="Core.Types"/>
 
   <Data name="Character">
     <Field name="Name" type="string"/>
@@ -29,8 +30,23 @@
     <Summary>
       Singleton class for the list of users
     </Summary>
+    <Field name="Id" type="int" description="This class is a singleton, only use Id=0"/>
     <List name="Users" type="Dictionary">
       <Element name="user" type="User"/>
     </List>
+    <Key>
+      <FieldRef ref="Id"/>
+    </Key>
+    <Messages>
+      <MessageRef ref="LoginUser" handled="Directly"/>
+    </Messages>
   </Data>
+
+  <Message name="LoginUser" expose="true">
+    <Summary>
+      Send this message to request a user login
+    </Summary>
+    <Parameter name="Name" type="string"/>
+    <Parameter name="Password" type="string"/>
+  </Message>
 </Module>

@@ -13,5 +13,8 @@ namespace Server
 		[OperationContract]
 		string PostMobileEntityTurnMessage(int MobileEntityId, TurnMessage message);
 
+		[OperationContract]
+		string PostUserListLoginUserMessage(int UserListId, LoginUserMessage message);
+
 	}
 }
