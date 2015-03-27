@@ -47,7 +47,10 @@
     <Compile Include="Character.generated.cs">
       <DependentUpon>Server.Login.Code.tt</DependentUpon>
     </Compile>
-    <Compile Include="IService.generated.cs">
+    <Compile Include="ILoginService.generated.cs">
+      <DependentUpon>Server.Login.ServiceCodeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginService.generated.cs">
       <DependentUpon>Server.Login.ServiceCodeGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="LoginToken.generated.cs">
@@ -66,9 +69,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Server.Login.ContractCodeGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Service.generated.cs">
-      <DependentUpon>Server.Login.ServiceCodeGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="Server.Login.ServiceCodeGenerator.cs">
       <AutoGen>True</AutoGen>
