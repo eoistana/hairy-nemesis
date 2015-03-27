@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 
-namespace Server
+namespace Server.Login
 {
 	[DataContract]
 	public partial class LoginUserMessage

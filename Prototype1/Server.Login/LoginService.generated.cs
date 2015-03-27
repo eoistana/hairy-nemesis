@@ -2,7 +2,7 @@ using System.ServiceModel;
 
 namespace Server.Login
 {
-	public partial class Service : IService
+	public partial class LoginService : ILoginService
 	{
 		public LoginToken PostUserListLoginUserMessage(LoginUserMessage message)
 		{

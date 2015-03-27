@@ -17,8 +17,8 @@ namespace Server.Login
 {
 <#
 
-manager.StartNewFile("IService.generated.cs");#>
-	public partial interface IService
+manager.StartNewFile("ILoginService.generated.cs");#>
+	public partial interface ILoginService
 	{
 <#foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient))
 {
@@ -43,8 +43,8 @@ manager.StartNewFile("IService.generated.cs");#>
 <#
 	manager.EndBlock();
 
-manager.StartNewFile("Service.generated.cs");#>
-	public partial class Service : IService
+manager.StartNewFile("LoginService.generated.cs");#>
+	public partial class LoginService : ILoginService
 	{
 <#foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient))
 {
