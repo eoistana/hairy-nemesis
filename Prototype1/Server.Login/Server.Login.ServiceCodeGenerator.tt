@@ -13,7 +13,7 @@ parser.ValidateReferences();
 #><# manager.StartHeader(); 
 #>using System.ServiceModel;
 
-namespace Server
+namespace Server.Login
 {
 <#
 
@@ -24,9 +24,17 @@ manager.StartNewFile("IService.generated.cs");#>
 {
 	foreach(var b in parser.Data.Values.Where(d=>d.Messages.ContainsKey(m.Name)))
 	{
+		var keynames = string.Join(", ", b.GetKeyNamesAndTypes(b.Name).Select(kv=>kv.Value + " " + kv.Key));
+		if(keynames.Length > 0) keynames += ", ";
 #>
 		[OperationContract]
-		string Post<#=b.Name#><#=m.Name#>Message(<#=string.Join(", ", b.GetKeyNamesAndTypes(b.Name).Select(kv=>kv.Value + " " + kv.Key))#>, <#=m.Name#>Message message);
+		<#
+		if(m.ReturnValue.Count>0)
+		{
+			#><#=m.ReturnValue.Keys.First() #><#
+		}
+		else{#>void<#}
+		#> Post<#=b.Name#><#=m.Name#>Message(<#=keynames#><#=m.Name#>Message message);
 
 <#
 	}
@@ -42,13 +50,33 @@ manager.StartNewFile("Service.generated.cs");#>
 {
 	foreach(var b in parser.Data.Values.Where(d=>d.Messages.ContainsKey(m.Name)))
 	{
+		var keynames = string.Join(", ", b.GetKeyNamesAndTypes(b.Name).Select(kv=>kv.Value + " " + kv.Key));
+		if(keynames.Length > 0) keynames += ", ";
 #>
-		public string Post<#=b.Name#><#=m.Name#>Message(<#=string.Join(", ", b.GetKeyNamesAndTypes(b.Name).Select(kv=>kv.Value + " " + kv.Key))#>, <#=m.Name#>Message message)
+		public <#
+
+		if(m.ReturnValue.Count>0)
 		{
+			#><#=m.ReturnValue.Keys.First() #><#
+		}
+		else{#>void<#}
+					#> Post<#=b.Name#><#=m.Name#>Message(<#=keynames#><#=m.Name#>Message message)
+		{
+<#
+		if(b.Singleton)
+		{#>
+			// Singleton
+			<#=(m.ReturnValue.Count>0)?"return ":""#><#=b.Name#>.Singleton.Register<#=m.Name#>Message(message);
+<#
+		}
+		else
+		{#>			
 			// Find <#=b.Name#> with id "<#=string.Join(", ", b.GetKeyNamesAndTypes(b.Name).Select(kv=>kv.Key))#>"
+			<#=b.Name#> data;
 			// Check if valid request
 			// Dispatch message
-			return null;
+			<#=(m.ReturnValue.Count>0)?"return ":""#>data.Register<#=m.Name#>Message(message);
+<#		}#>
 		}
 
 <#

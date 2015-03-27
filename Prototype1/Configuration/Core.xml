@@ -4,6 +4,7 @@
         xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <Using module="Core.Types"/>
+  <Using module="Core.Enumerations"/>
   <Using module="Core.Messages"/>
   <Using module="Core.Events"/>
 

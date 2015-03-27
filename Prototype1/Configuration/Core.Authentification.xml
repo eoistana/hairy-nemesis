@@ -26,20 +26,23 @@
     </Key>
   </Data>
 
-  <Data name="UserList">
+  <Data name="UserList" singleton="true">
     <Summary>
       Singleton class for the list of users
     </Summary>
-    <Field name="Id" type="int" description="This class is a singleton, only use Id=0"/>
     <List name="Users" type="Dictionary">
       <Element name="user" type="User"/>
     </List>
-    <Key>
-      <FieldRef ref="Id"/>
-    </Key>
     <Messages>
       <MessageRef ref="LoginUser" handled="Directly"/>
     </Messages>
+  </Data>
+
+  <Data name="LoginToken">
+    <Summary>
+      Session token
+    </Summary>
+    <Field name="Token" type="string"/>
   </Data>
 
   <Message name="LoginUser" expose="true">
@@ -48,5 +51,8 @@
     </Summary>
     <Parameter name="Name" type="string"/>
     <Parameter name="Password" type="string"/>
+    <Returns dataref="LoginToken" returnmethod="Synchronized"/>
   </Message>
+  
+  
 </Module>

@@ -7,12 +7,12 @@ using Normalized.Maths;
 
 namespace Modules.Engine
 {
-	[Flags]
-	public enum EdgeType
+	public partial class TurnMessage
 	{
-		None = 0x0000,
-		BlockingPassage = 0x0001,
-		BlockingView = 0x0002,
-		BlockingLight = 0x0004,
+
+		public TurnMessage()
+		{
+		}
+
 	}
 }

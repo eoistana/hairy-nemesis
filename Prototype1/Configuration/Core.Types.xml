@@ -9,12 +9,4 @@
 
   <SimpleType name="Vector" cstype="Vector"/>
 
-  <Enum name="EdgeType" flags="true">
-    <Value name="None" value="0x0000"/>
-    <Value name="BlockingPassage" value="0x0001"/>
-    <Value name="BlockingView" value="0x0002"/>
-    <Value name="BlockingLight" value="0x0004"/>
-  </Enum>
-
-
 </Module>

@@ -1,5 +1,5 @@
 ﻿using System.ServiceModel;
 
-namespace Server
+namespace Server.Login
 {
 }

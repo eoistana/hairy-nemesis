@@ -148,6 +148,13 @@
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
+    <xs:attribute name="singleton" use="optional" type="xs:boolean" default="false">
+      <xs:annotation>
+        <xs:documentation>
+          Is this a singleton
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="SummaryType">
@@ -266,6 +273,37 @@
           </xs:complexType>
         </xs:element>
       </xs:sequence>
+      <xs:element name="Returns" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:attribute name="dataref" type="xs:QName" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                The message class to return
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="returnmethod" default="Asynchronized">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="Asynchronized">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Default behavior. Return value will be available at next status update.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="Synchronized">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Blocking call. Will return answer at once.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:enumeration>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
     <xs:attribute name="name" use="required" type="xs:NCName"/>
     <xs:attribute name="expose" use="optional" type="xs:boolean" default="false"/>

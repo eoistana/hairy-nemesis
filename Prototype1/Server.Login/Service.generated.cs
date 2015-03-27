@@ -1,15 +1,13 @@
 using System.ServiceModel;
 
-namespace Server
+namespace Server.Login
 {
 	public partial class Service : IService
 	{
-		public string PostUserListLoginUserMessage(int UserListId, LoginUserMessage message)
+		public LoginToken PostUserListLoginUserMessage(LoginUserMessage message)
 		{
-			// Find UserList with id "UserListId"
-			// Check if valid request
-			// Dispatch message
-			return null;
+			// Singleton
+			return UserList.Singleton.RegisterLoginUserMessage(message);
 		}
 
 	}

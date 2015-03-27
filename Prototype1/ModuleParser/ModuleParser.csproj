@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayParser.cs" />
+    <Compile Include="ReturnsParser.cs" />
     <Compile Include="DataParser.cs" />
     <Compile Include="DataRefParser.cs" />
     <Compile Include="EnumParser.cs" />

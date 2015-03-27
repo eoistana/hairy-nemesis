@@ -14,6 +14,7 @@ namespace ModulesParser
   public class DataParser : Parser, IDeclaration
   {
     public string Base;
+    public bool Singleton;
     public DataParser BaseRef;
 
     public SummaryParser Summary;
@@ -53,6 +54,7 @@ namespace ModulesParser
     public override void Parse(ModuleParser moduleParser, DataParser data)
     {
       if (Node.Attributes["base"] != null) Base = Node.Attributes["base"].InnerText;
+      if (Node.Attributes["singleton"] != null) Singleton = Node.Attributes["singleton"].InnerText == "true";
       ParseData(moduleParser);
     }
 
@@ -134,6 +136,20 @@ namespace ModulesParser
     public string GetFieldDeclarations(string tabs)
     {
       var field = string.Join("\n" + tabs, Fields.Values.Select(f => f.GetSummary(tabs) + "\n" + tabs + f.GetPublicDeclaration()));
+      if (Singleton)
+      {
+        var single = new StringBuilder();
+        single.AppendLine("private static " + Name + " singleton = null;");
+        single.AppendLine(tabs + "public static " + Name + " Singleton");
+        single.AppendLine(tabs + "{");
+        single.AppendLine(tabs + "  get");
+        single.AppendLine(tabs + "  {");
+        single.AppendLine(tabs + "    if (singleton == null) singleton = new " + Name + "();");
+        single.AppendLine(tabs + "    return singleton;");
+        single.AppendLine(tabs + "  }");
+        single.AppendLine(tabs + "}");
+        field = single.ToString() + (field.Length > 0 ? tabs + field + "\n" : "");
+      }
       return field.Length > 0 ? tabs + field + "\n" : "";
     }
 

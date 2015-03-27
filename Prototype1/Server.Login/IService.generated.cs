@@ -1,11 +1,11 @@
 using System.ServiceModel;
 
-namespace Server
+namespace Server.Login
 {
 	public partial interface IService
 	{
 		[OperationContract]
-		string PostUserListLoginUserMessage(int UserListId, LoginUserMessage message);
+		LoginToken PostUserListLoginUserMessage(LoginUserMessage message);
 
 	}
 }
