@@ -53,6 +53,24 @@ namespace Modules.Engine
 				if (!this.Entities.Any()) this.Entities = null;
 			}
 		}
+
+		public Entity GetEntities(int i)
+		{
+			lock (this.EntitiesSyncRoot)
+			{
+				return this.Entities[i];
+			}
+		}
+
+		public IEnumerable<Entity> SelectEntities()
+		{
+			Entity[] list;
+			lock (this.EntitiesSyncRoot)
+			{
+				list = this.Entities.ToArray();
+			}
+			foreach(var l in list) yield return l;
+		}
 		#endregion
 
 		#region Events
@@ -98,6 +116,7 @@ namespace Modules.Engine
 		}
 
 		#endregion
+
 
 	}
 }

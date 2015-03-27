@@ -74,7 +74,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Events.include.tt" />
+    <None Include="ListAccess.include.tt" />
     <None Include="Manager.ttinclude" />
+    <None Include="Messages.include.tt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

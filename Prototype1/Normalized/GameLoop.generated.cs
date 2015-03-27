@@ -49,6 +49,24 @@ namespace Modules.Engine
 				if (!this.Maps.Any()) this.Maps = null;
 			}
 		}
+
+		public Map GetMaps(int i)
+		{
+			lock (this.MapsSyncRoot)
+			{
+				return this.Maps[i];
+			}
+		}
+
+		public IEnumerable<Map> SelectMaps()
+		{
+			Map[] list;
+			lock (this.MapsSyncRoot)
+			{
+				list = this.Maps.ToArray();
+			}
+			foreach(var l in list) yield return l;
+		}
 		#endregion
 
 		#region Events
@@ -87,6 +105,7 @@ namespace Modules.Engine
 		}
 
 		#endregion
+
 
 	}
 }

@@ -1,0 +1,79 @@
+﻿<#
+
+	if(parser.Events.Count>0)
+	{#>
+
+		#region Events
+<#
+	}
+	foreach(var e in parser.Events.Values)
+	{#>
+
+		public <# if(d.Base==null) {#>virtual<#}else{#>override<#}#> void <#=e.Name#>(<#=e.Name#>EventParameters e)
+		{
+<#		if(d.Base!=null)
+		{#>
+			base.<#=e.Name#>(e);
+<#
+		}#>
+			var p = new <#=e.Name#>EventParameters(e);
+<#		if(d.Events.ContainsKey(e.Name))
+		{
+			var ev = d.Events[e.Name];
+			foreach(var proc in ev.Processes.Values)
+			{
+#>			<#=proc.Name#>Message <#=e.Name#><#=proc.Name#>Message;
+			if(<#=proc.Name#>Messages.TryPop(out <#=e.Name#><#=proc.Name#>Message))
+				OnProcess<#=e.Name#><#=proc.Name#>Message(<#=e.Name#><#=proc.Name#>Message);
+<#			}
+#>			On<#=e.Name#>(p);
+<#		}
+#>			if(p.Continue)
+			{
+<#
+		foreach(var f in d.Fields.Values)
+		{
+			if(f.ImplementsEvent(e.Name))
+			{#>
+				if(<#=f.Name#> != null) <#=f.Name#>.<#=e.Name#>(p);
+<#			}
+		}
+		foreach(var l in d.Lists.Values)
+		{
+			if(l.ImplementsEvent(e.Name))
+			{#>
+				<#=l.ListElement.GetTypeName()#>[] <#=l.Name#>Copy = null;
+				lock(<#=l.Name#>SyncRoot)
+				{
+					if(<#=l.Name#> != null) 
+						<#=l.Name#>Copy = <#=l.Name#>.ToArray();
+				}
+				if (<#=l.Name#>Copy != null) Parallel.ForEach(<#=l.Name#>Copy, x => { if (x != null)x.<#=e.Name#>(p); });
+<#			}
+		}
+		foreach(var a in d.Arrays.Values)
+		{
+			if(a.ImplementsEvent(e.Name))
+			{#>
+				if (<#=a.Name#> != null)
+					<#=a.GetEventCaller("						",0)#>y => { var a = <#=a.Name#>[<#=a.GetEventLooper(0)#>]; if(a != null) a.<#=e.Name#>(p); }<#=a.GetEventClosure(0)#>;
+<#			}
+		}#>
+			}
+		}
+
+<#
+	}
+	foreach(var e in d.Events.Values)
+	{#>
+		partial void On<#=e.Name#>(<#=e.Name#>EventParameters e);
+<#		foreach(var proc in e.Processes.Values)
+		{
+#>		partial void OnProcess<#=e.Name#><#=proc.Name#>Message(<#=proc.Name#>Message <#=e.Name#><#=proc.Name#>Message);
+<#		}
+	}
+	if(parser.Events.Count>0)
+	{#>
+		#endregion
+<#
+	}#>

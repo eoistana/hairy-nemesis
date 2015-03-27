@@ -47,6 +47,24 @@ namespace Server.Login
 				if (!this.Characters.Any()) this.Characters = null;
 			}
 		}
+
+		public Character GetCharacters(int i)
+		{
+			lock (this.CharactersSyncRoot)
+			{
+				return this.Characters[i];
+			}
+		}
+
+		public IEnumerable<Character> SelectCharacters()
+		{
+			Character[] list;
+			lock (this.CharactersSyncRoot)
+			{
+				list = this.Characters.ToArray();
+			}
+			foreach(var l in list) yield return l;
+		}
 		#endregion
 
 	}

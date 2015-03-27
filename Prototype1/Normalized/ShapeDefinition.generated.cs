@@ -41,6 +41,24 @@ namespace Modules.Engine
 				if (!this.Edges.Any()) this.Edges = null;
 			}
 		}
+
+		public Edge GetEdges(int i)
+		{
+			lock (this.EdgesSyncRoot)
+			{
+				return this.Edges[i];
+			}
+		}
+
+		public IEnumerable<Edge> SelectEdges()
+		{
+			Edge[] list;
+			lock (this.EdgesSyncRoot)
+			{
+				list = this.Edges.ToArray();
+			}
+			foreach(var l in list) yield return l;
+		}
 		#endregion
 
 		#region Events
@@ -72,6 +90,7 @@ namespace Modules.Engine
 		}
 
 		#endregion
+
 
 	}
 }

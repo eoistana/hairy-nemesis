@@ -1,0 +1,64 @@
+﻿<#
+	if(d.Lists.Count>0)
+	{#>
+
+		#region List access
+<#
+	}
+	foreach(var l in d.Lists.Values)
+	{
+#>
+
+		protected readonly object <#=l.Name#>SyncRoot = new object();
+		public void Add<#=l.Name#>(<#=l.ListElement.GetTypeName()#> <#=l.ListElement.GetName()#>)
+		{
+			lock (this.<#=l.Name#>SyncRoot)
+			{
+				if (this.<#=l.Name#> == null) this.<#=l.Name#> = new List<<#=l.ListElement.GetTypeName()#>>();
+				this.<#=l.Name#>.Add(<#=l.ListElement.GetName()#>);
+<#		if(l.IsExtendedProperty(d))
+		{
+#>				<#=l.ListElement.GetName()#>.<#=(l.ListElement as DataRefParser).DataType.Extends[d.Name].ParentVar#> = this;
+<#
+		}
+#>			}
+		}
+
+		internal void Remove<#=l.Name#>(<#=l.ListElement.GetTypeName()#> <#=l.ListElement.GetName()#>)
+		{
+			lock (this.<#=l.Name#>SyncRoot)
+			{
+				this.<#=l.Name#>.Remove(<#=l.ListElement.GetName()#>);
+				if (!this.<#=l.Name#>.Any()) this.<#=l.Name#> = null;
+<#		if(l.IsExtendedProperty(d))
+		{
+#>				<#=l.ListElement.GetName()#>.<#=(l.ListElement as DataRefParser).DataType.Extends[d.Name].ParentVar#> = null;
+<#
+		}
+#>			}
+		}
+
+		public <#=l.ListElement.GetTypeName()#> Get<#=l.Name#>(int i)
+		{
+			lock (this.<#=l.Name#>SyncRoot)
+			{
+				return this.<#=l.Name#>[i];
+			}
+		}
+
+		public IEnumerable<<#=l.ListElement.GetTypeName()#>> Select<#=l.Name#>()
+		{
+			<#=l.ListElement.GetTypeName()#>[] list;
+			lock (this.<#=l.Name#>SyncRoot)
+			{
+				list = this.<#=l.Name#>.ToArray();
+			}
+			foreach(var l in list) yield return l;
+		}
+<#	}#>
+<#
+	if(d.Lists.Count>0)
+	{#>
+		#endregion
+<#
+	}#>

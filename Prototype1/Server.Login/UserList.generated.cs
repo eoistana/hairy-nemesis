@@ -51,13 +51,31 @@ namespace Server.Login
 				if (!this.Users.Any()) this.Users = null;
 			}
 		}
+
+		public User GetUsers(int i)
+		{
+			lock (this.UsersSyncRoot)
+			{
+				return this.Users[i];
+			}
+		}
+
+		public IEnumerable<User> SelectUsers()
+		{
+			User[] list;
+			lock (this.UsersSyncRoot)
+			{
+				list = this.Users.ToArray();
+			}
+			foreach(var l in list) yield return l;
+		}
 		#endregion
 
 		#region Messages
 
-		public class LoginUserMessageReturnValue
+		private class LoginUserMessageReturnValue
 		{
-			public LoginToken ReturnValue;
+			public LoginToken ReturnValue = null;
 		}
 		partial void OnProcessLoginUserMessage(LoginUserMessage message, LoginUserMessageReturnValue returnValue);
 		public LoginToken RegisterLoginUserMessage(LoginUserMessage message)

@@ -1,0 +1,47 @@
+﻿<#
+	if(d.Messages.Count>0)
+	{#>
+		#region Messages
+
+<#
+		foreach(var m in d.Messages.Values)
+		{
+			if(m.Handled == MessageHandler.ByEvent)
+			{#>
+		protected ConcurrentQueue<<#=m.Name#>Message> <#=m.Name#>Messages = new ConcurrentQueue<<#=m.Name#>Message>();
+		public void Register<#=m.Name#>Message(<#=m.Name#>Message message)
+		{
+			<#=m.Name#>Messages.Push(message);
+		}
+<#
+			}
+			else
+			{
+				if(m.Declaration.ReturnValue.Count==0)
+				{#>
+		partial void OnProcess<#=m.Name#>Message(<#=m.Name#>Message message);
+		public void Register<#=m.Name#>Message(<#=m.Name#>Message message)
+		{
+			OnProcess<#=m.Name#>Message(message);
+		}
+<#				}
+				else
+				{#>
+		private class <#=m.Name#>MessageReturnValue
+		{
+			public <#=m.Declaration.ReturnValue.Keys.First()#> ReturnValue = null;
+		}
+		partial void OnProcess<#=m.Name#>Message(<#=m.Name#>Message message, <#=m.Name#>MessageReturnValue returnValue);
+		public <#=m.Declaration.ReturnValue.Keys.First()#> Register<#=m.Name#>Message(<#=m.Name#>Message message)
+		{
+			var returnValue = new <#=m.Name#>MessageReturnValue();
+			OnProcess<#=m.Name#>Message(message, returnValue);
+			return returnValue.ReturnValue;
+		}
+<#				}
+			}
+		}
+	#>
+		#endregion
+<#
+	}#>

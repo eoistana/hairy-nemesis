@@ -54,6 +54,24 @@ namespace Modules.Engine
 			}
 		}
 
+		public Edge Getedges(int i)
+		{
+			lock (this.edgesSyncRoot)
+			{
+				return this.edges[i];
+			}
+		}
+
+		public IEnumerable<Edge> Selectedges()
+		{
+			Edge[] list;
+			lock (this.edgesSyncRoot)
+			{
+				list = this.edges.ToArray();
+			}
+			foreach(var l in list) yield return l;
+		}
+
 		protected readonly object linesSyncRoot = new object();
 		public void Addlines(Line line)
 		{
@@ -71,6 +89,24 @@ namespace Modules.Engine
 				this.lines.Remove(line);
 				if (!this.lines.Any()) this.lines = null;
 			}
+		}
+
+		public Line Getlines(int i)
+		{
+			lock (this.linesSyncRoot)
+			{
+				return this.lines[i];
+			}
+		}
+
+		public IEnumerable<Line> Selectlines()
+		{
+			Line[] list;
+			lock (this.linesSyncRoot)
+			{
+				list = this.lines.ToArray();
+			}
+			foreach(var l in list) yield return l;
 		}
 		#endregion
 
@@ -103,6 +139,7 @@ namespace Modules.Engine
 		}
 
 		#endregion
+
 
 	}
 }

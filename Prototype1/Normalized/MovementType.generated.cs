@@ -39,6 +39,24 @@ namespace Modules.Engine
 				if (!this.Types.Any()) this.Types = null;
 			}
 		}
+
+		public TypesList GetTypes(int i)
+		{
+			lock (this.TypesSyncRoot)
+			{
+				return this.Types[i];
+			}
+		}
+
+		public IEnumerable<TypesList> SelectTypes()
+		{
+			TypesList[] list;
+			lock (this.TypesSyncRoot)
+			{
+				list = this.Types.ToArray();
+			}
+			foreach(var l in list) yield return l;
+		}
 		#endregion
 
 		#region Events
@@ -70,6 +88,7 @@ namespace Modules.Engine
 		}
 
 		#endregion
+
 
 	}
 }
