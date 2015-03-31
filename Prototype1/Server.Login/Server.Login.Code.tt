@@ -51,8 +51,7 @@ foreach(var d in parser.Data.Values)
 
 		partial void On<#=d.Name#>Init();
 <#@include file="..\Configuration\ListAccess.include.tt"
-#><#@include file="..\Configuration\Events.include.tt"
-#>
+#><#@include file="..\Configuration\Events.include.tt"#>
 
 <#@include file="..\Configuration\Messages.include.tt"
 #>

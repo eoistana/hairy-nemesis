@@ -21,7 +21,7 @@ using System.Runtime.Serialization;
 namespace Server.Login
 {
 <#
-foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient))
+foreach(var m in parser.Messages.Values)
 {
 	manager.StartNewFile(string.Format("{0}Message.generated.cs", m.Name)); #>
 	[DataContract]

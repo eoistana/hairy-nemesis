@@ -155,6 +155,13 @@
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
+    <xs:attribute name="expose" use="optional" type="xs:boolean" default="false">
+      <xs:annotation>
+        <xs:documentation>
+          It this exposed through the service
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="SummaryType">
@@ -275,7 +282,7 @@
       </xs:sequence>
       <xs:element name="Returns" minOccurs="0" maxOccurs="1">
         <xs:complexType>
-          <xs:attribute name="dataref" type="xs:QName" use="required">
+          <xs:attribute name="ref" type="xs:QName" use="required">
             <xs:annotation>
               <xs:documentation>
                 The message class to return

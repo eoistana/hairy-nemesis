@@ -15,8 +15,9 @@ namespace Server.Login
 		
 		public string Token;
 
-		public LoginToken()
+		public LoginToken(string token)
 		{
+			this.Token = token;
 			OnLoginTokenInit();
 		}
 

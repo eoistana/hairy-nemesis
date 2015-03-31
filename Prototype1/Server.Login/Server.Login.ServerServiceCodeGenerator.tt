@@ -17,10 +17,11 @@ namespace Server.Login
 {
 <#
 
-manager.StartNewFile("ILoginService.generated.cs");#>
-	public partial interface ILoginService
+manager.StartNewFile("ILoginServerService.generated.cs");#>
+	[ServiceContract]
+	public partial interface ILoginServerService
 	{
-<#foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient))
+<#foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient == false))
 {
 	foreach(var b in parser.Data.Values.Where(d=>d.Messages.ContainsKey(m.Name)))
 	{
@@ -31,7 +32,7 @@ manager.StartNewFile("ILoginService.generated.cs");#>
 		<#
 		if(m.ReturnValue.Count>0)
 		{
-			#><#=m.ReturnValue.Keys.First() #><#
+			#><#=m.ReturnValue.Keys.First() #>Message<#
 		}
 		else{#>void<#}
 		#> Post<#=b.Name#><#=m.Name#>Message(<#=keynames#><#=m.Name#>Message message);
@@ -43,10 +44,10 @@ manager.StartNewFile("ILoginService.generated.cs");#>
 <#
 	manager.EndBlock();
 
-manager.StartNewFile("LoginService.generated.cs");#>
-	public partial class LoginService : ILoginService
+manager.StartNewFile("LoginServerService.generated.cs");#>
+	public partial class LoginServerService : ILoginServerService
 	{
-<#foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient))
+<#foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient == false))
 {
 	foreach(var b in parser.Data.Values.Where(d=>d.Messages.ContainsKey(m.Name)))
 	{
@@ -57,7 +58,7 @@ manager.StartNewFile("LoginService.generated.cs");#>
 
 		if(m.ReturnValue.Count>0)
 		{
-			#><#=m.ReturnValue.Keys.First() #><#
+			#><#=m.ReturnValue.Keys.First() #>Message<#
 		}
 		else{#>void<#}
 					#> Post<#=b.Name#><#=m.Name#>Message(<#=keynames#><#=m.Name#>Message message)

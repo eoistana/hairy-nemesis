@@ -6,6 +6,7 @@
   <SimpleType name="double" cstype="double"/>
   <SimpleType name="string" cstype="string"/>
   <SimpleType name="bool" cstype="bool"/>
+  <SimpleType name="DateTime" cstype="DateTime"/>
 
   <SimpleType name="Vector" cstype="Vector"/>
 

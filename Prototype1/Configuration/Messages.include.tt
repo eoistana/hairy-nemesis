@@ -29,10 +29,10 @@
 				{#>
 		private class <#=m.Name#>MessageReturnValue
 		{
-			public <#=m.Declaration.ReturnValue.Keys.First()#> ReturnValue = null;
+			public <#=m.Declaration.ReturnValue.Keys.First()#>Message ReturnValue = null;
 		}
 		partial void OnProcess<#=m.Name#>Message(<#=m.Name#>Message message, <#=m.Name#>MessageReturnValue returnValue);
-		public <#=m.Declaration.ReturnValue.Keys.First()#> Register<#=m.Name#>Message(<#=m.Name#>Message message)
+		public <#=m.Declaration.ReturnValue.Keys.First()#>Message Register<#=m.Name#>Message(<#=m.Name#>Message message)
 		{
 			var returnValue = new <#=m.Name#>MessageReturnValue();
 			OnProcess<#=m.Name#>Message(message, returnValue);

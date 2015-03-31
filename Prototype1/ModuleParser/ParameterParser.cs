@@ -64,7 +64,8 @@ namespace ModulesParser
 
     public Dictionary<string, string> GetServiceType(string name)
     {
-      if (DataType == null) return new Dictionary<string, string> { { name, Type } };
+      return new Dictionary<string, string> { { name, Type } };
+      if (DataType == null) 
 
       return DataType.GetKeyNamesAndTypes(name);
     }

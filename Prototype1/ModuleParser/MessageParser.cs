@@ -24,7 +24,7 @@ namespace ModulesParser
     {
       ExposedToClient = (Node.Attributes["expose"] != null) ? Node.Attributes["expose"].InnerText == "true" : false;
       Parse(moduleParser, data, Parameters, "./en:Parameter");
-      Parse(moduleParser, data, ReturnValue, "./en:Returns", "dataref");
+      Parse(moduleParser, data, ReturnValue, "./en:Returns", "ref");
     }
 
     private bool validated;

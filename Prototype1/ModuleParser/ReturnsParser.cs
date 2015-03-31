@@ -16,10 +16,10 @@ namespace ModulesParser
   /// <summary>
   /// Parses a reference to a Data element
   /// </summary>
-  public class ReturnsParser : Parser, IDeclaration
+  public class ReturnsParser : Parser
   {
     public string Ref;
-    public DataParser DataType;
+    public MessageParser MessageType;
     public ReturnMethod ReturnMethod;
 
     public ReturnsParser(string @ref, XmlNode node) : base(@ref, node)
@@ -37,31 +37,11 @@ namespace ModulesParser
     {
       if (validated) return;
       validated = true;
-      if (data.ContainsKey(Ref)) DataType = data[Ref];
+      if (messages.ContainsKey(Ref)) MessageType = messages[Ref];
 
-      if (DataType == null) throw new ArgumentException("Referenced data element does not exist", Ref);
+      if (MessageType == null) throw new ArgumentException("Referenced message element does not exist", Ref);
     }
 
-    public string GetDeclaration()
-    {
-      throw new NotImplementedException();
-    }
-
-    public bool ImplementsEvent(string eventName)
-    {
-      return false;
-    }
-
-    public string GetTypeName()
-    {
-      return DataType.GetTypeName();
-    }
-
-
-    public string GetName()
-    {
-      return Ref;
-    }
   }
 }
 

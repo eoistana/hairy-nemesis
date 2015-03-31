@@ -114,6 +114,12 @@ namespace ModulesParser
       return (Base != null) ? " : " + Base : "";
     }
 
+    public string GetEqualityInterface()
+    {
+      var eq = "IEquatable<" + Name + ">";
+      return (Base != null) ? " : " : ", " + eq;
+    }
+
     public string GetCtorParams()
     {
       var basector = (BaseRef != null) ? BaseRef.GetCtorParams() : "";

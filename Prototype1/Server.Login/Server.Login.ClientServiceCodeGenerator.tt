@@ -1,0 +1,96 @@
+﻿<#@ template language="C#" hostspecific="True" debug="true"
+#><#@include file="..\Configuration\Manager.ttinclude"
+#><#@ assembly name="$(SolutionDir)\ModuleParser\bin\Debug\ModuleParser.dll"
+#><#@ assembly name="System.Core"
+#><#@ import namespace="ModulesParser"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.Linq"
+#><# var manager = Manager.Create(Host, GenerationEnvironment); 
+var configpath = Path.GetDirectoryName(Host.TemplateFile);
+var parser = new ModuleParser(configpath + "\\..\\Configuration\\Core.Authentification.xml");
+parser.ValidateReferences();
+
+#><# manager.StartHeader(); 
+#>using System.ServiceModel;
+
+namespace Server.Login
+{
+<#
+
+manager.StartNewFile("ILoginClientService.generated.cs");#>
+	[ServiceContract]
+	public partial interface ILoginClientService
+	{
+<#foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient))
+{
+	foreach(var b in parser.Data.Values.Where(d=>d.Messages.ContainsKey(m.Name)))
+	{
+		var keynames = string.Join(", ", b.GetKeyNamesAndTypes(b.Name).Select(kv=>kv.Value + " " + kv.Key));
+		if(keynames.Length > 0) keynames += ", ";
+#>
+		[OperationContract]
+		<#
+		if(m.ReturnValue.Count>0)
+		{
+			#><#=m.ReturnValue.Keys.First() #>Message<#
+		}
+		else{#>void<#}
+		#> Post<#=b.Name#><#=m.Name#>Message(<#=keynames#><#=m.Name#>Message message);
+
+<#
+	}
+}
+#>	}
+<#
+	manager.EndBlock();
+
+manager.StartNewFile("LoginClientService.generated.cs");#>
+	public partial class LoginClientService : ILoginClientService
+	{
+<#foreach(var m in parser.Messages.Values.Where(v=>v.ExposedToClient))
+{
+	foreach(var b in parser.Data.Values.Where(d=>d.Messages.ContainsKey(m.Name)))
+	{
+		var keynames = string.Join(", ", b.GetKeyNamesAndTypes(b.Name).Select(kv=>kv.Value + " " + kv.Key));
+		if(keynames.Length > 0) keynames += ", ";
+#>
+		public <#
+
+		if(m.ReturnValue.Count>0)
+		{
+			#><#=m.ReturnValue.Keys.First() #>Message<#
+		}
+		else{#>void<#}
+					#> Post<#=b.Name#><#=m.Name#>Message(<#=keynames#><#=m.Name#>Message message)
+		{
+<#
+		if(b.Singleton)
+		{#>
+			// Singleton
+			<#=(m.ReturnValue.Count>0)?"return ":""#><#=b.Name#>.Singleton.Register<#=m.Name#>Message(message);
+<#
+		}
+		else
+		{#>			
+			// Find <#=b.Name#> with id "<#=string.Join(", ", b.GetKeyNamesAndTypes(b.Name).Select(kv=>kv.Key))#>"
+			<#=b.Name#> data;
+			// Check if valid request
+			// Dispatch message
+			<#=(m.ReturnValue.Count>0)?"return ":""#>data.Register<#=m.Name#>Message(message);
+<#		}#>
+		}
+
+<#
+	}
+}
+#>	}
+<#
+	manager.EndBlock();
+
+manager.StartFooter();
+#>
+}
+<#
+	manager.EndBlock();
+manager.Process(true);
+ #>

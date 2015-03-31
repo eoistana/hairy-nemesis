@@ -23,6 +23,7 @@ namespace Server.Login
 		}
 
 		public List<User> Users;
+		public List<TokenUsage> Tokens;
 
 		public UserList()
 		{
@@ -69,19 +70,77 @@ namespace Server.Login
 			}
 			foreach(var l in list) yield return l;
 		}
+
+		protected readonly object TokensSyncRoot = new object();
+		public void AddTokens(TokenUsage tokenUsage)
+		{
+			lock (this.TokensSyncRoot)
+			{
+				if (this.Tokens == null) this.Tokens = new List<TokenUsage>();
+				this.Tokens.Add(tokenUsage);
+			}
+		}
+
+		internal void RemoveTokens(TokenUsage tokenUsage)
+		{
+			lock (this.TokensSyncRoot)
+			{
+				this.Tokens.Remove(tokenUsage);
+				if (!this.Tokens.Any()) this.Tokens = null;
+			}
+		}
+
+		public TokenUsage GetTokens(int i)
+		{
+			lock (this.TokensSyncRoot)
+			{
+				return this.Tokens[i];
+			}
+		}
+
+		public IEnumerable<TokenUsage> SelectTokens()
+		{
+			TokenUsage[] list;
+			lock (this.TokensSyncRoot)
+			{
+				list = this.Tokens.ToArray();
+			}
+			foreach(var l in list) yield return l;
+		}
 		#endregion
 
 		#region Messages
 
+		partial void OnProcessAddUserMessage(AddUserMessage message);
+		public void RegisterAddUserMessage(AddUserMessage message)
+		{
+			OnProcessAddUserMessage(message);
+		}
 		private class LoginUserMessageReturnValue
 		{
-			public LoginToken ReturnValue = null;
+			public LoginUserResponseMessage ReturnValue = null;
 		}
 		partial void OnProcessLoginUserMessage(LoginUserMessage message, LoginUserMessageReturnValue returnValue);
-		public LoginToken RegisterLoginUserMessage(LoginUserMessage message)
+		public LoginUserResponseMessage RegisterLoginUserMessage(LoginUserMessage message)
 		{
 			var returnValue = new LoginUserMessageReturnValue();
 			OnProcessLoginUserMessage(message, returnValue);
+			return returnValue.ReturnValue;
+		}
+		partial void OnProcessLogoutUserMessage(LogoutUserMessage message);
+		public void RegisterLogoutUserMessage(LogoutUserMessage message)
+		{
+			OnProcessLogoutUserMessage(message);
+		}
+		private class VerifyTokenMessageReturnValue
+		{
+			public VerifyTokenResponseMessage ReturnValue = null;
+		}
+		partial void OnProcessVerifyTokenMessage(VerifyTokenMessage message, VerifyTokenMessageReturnValue returnValue);
+		public VerifyTokenResponseMessage RegisterVerifyTokenMessage(VerifyTokenMessage message)
+		{
+			var returnValue = new VerifyTokenMessageReturnValue();
+			OnProcessVerifyTokenMessage(message, returnValue);
 			return returnValue.ReturnValue;
 		}
 		#endregion

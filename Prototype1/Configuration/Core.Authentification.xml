@@ -33,17 +33,50 @@
     <List name="Users" type="Dictionary">
       <Element name="user" type="User"/>
     </List>
+    <List name="Tokens" type="Dictionary">
+      <Element name="tokenUsage" type="TokenUsage"/>
+    </List>
     <Messages>
+      <MessageRef ref="AddUser" handled="Directly"/>
       <MessageRef ref="LoginUser" handled="Directly"/>
+      <MessageRef ref="LogoutUser" handled="Directly"/>
+      <MessageRef ref="VerifyToken" handled="Directly"/>
     </Messages>
   </Data>
 
-  <Data name="LoginToken">
+  <Message name="AddUser" expose="false">
+    <Summary>
+      Add a new user
+    </Summary>
+    <Parameter name="Name" type="string"/>
+    <Parameter name="Password" type="string"/>
+  </Message>
+
+  <Data name="TokenUsage">
+    <Summary>
+      Holds the currently valid tokens
+    </Summary>
+    <Field name="Token" type="LoginToken"/>
+    <Field name="LastAccessed" type="DateTime"/>
+    <Field name="User" type="User"/>
+    <Key>
+      <FieldRef ref="Token"/>
+    </Key>
+  </Data>
+
+  <Data name="LoginToken" expose="true">
     <Summary>
       Session token
     </Summary>
     <Field name="Token" type="string"/>
+    <Key>
+      <FieldRef ref="Token"/>
+    </Key>
   </Data>
+
+  <Message name="LoginUserResponse" expose="true">
+    <Parameter name="Token" type="LoginToken"/>
+  </Message>
 
   <Message name="LoginUser" expose="true">
     <Summary>
@@ -51,8 +84,25 @@
     </Summary>
     <Parameter name="Name" type="string"/>
     <Parameter name="Password" type="string"/>
-    <Returns dataref="LoginToken" returnmethod="Synchronized"/>
+    <Returns ref="LoginUserResponse" returnmethod="Synchronized"/>
   </Message>
-  
+
+  <Message name="LogoutUser" expose="false">
+    <Summary>
+      Send this message to log out the user
+    </Summary>
+    <Parameter name="Token" type="LoginToken"/>    
+  </Message>
+
+  <Message name="VerifyTokenResponse" expose="false">
+    <Parameter name="Valid" type="bool"/>
+  </Message>
+  <Message name="VerifyToken" expose="false">
+    <Summary>
+      Send this message to check the validity of the token
+    </Summary>
+    <Parameter name="Token" type="LoginToken"/>
+    <Returns ref="VerifyTokenResponse" returnmethod="Synchronized"/>
+  </Message>
   
 </Module>

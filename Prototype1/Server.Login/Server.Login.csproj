@@ -44,19 +44,40 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddUserMessage.generated.cs">
+      <DependentUpon>Server.Login.ContractCodeGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="Character.generated.cs">
       <DependentUpon>Server.Login.Code.tt</DependentUpon>
     </Compile>
-    <Compile Include="ILoginService.generated.cs">
-      <DependentUpon>Server.Login.ServiceCodeGenerator.tt</DependentUpon>
+    <Compile Include="ClientExposed\UserList.Client.cs" />
+    <Compile Include="ILoginClientService.generated.cs">
+      <DependentUpon>Server.Login.ClientServiceCodeGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="LoginService.generated.cs">
-      <DependentUpon>Server.Login.ServiceCodeGenerator.tt</DependentUpon>
+    <Compile Include="ILoginServerService.generated.cs">
+      <DependentUpon>Server.Login.ServerServiceCodeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginClientService.generated.cs">
+      <DependentUpon>Server.Login.ClientServiceCodeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginServerService.generated.cs">
+      <DependentUpon>Server.Login.ServerServiceCodeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Server.Login.ServerServiceCodeGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Server.Login.ServerServiceCodeGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="LoginToken.generated.cs">
       <DependentUpon>Server.Login.Code.tt</DependentUpon>
     </Compile>
     <Compile Include="LoginUserMessage.generated.cs">
+      <DependentUpon>Server.Login.ContractCodeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginUserResponseMessage.generated.cs">
+      <DependentUpon>Server.Login.ContractCodeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LogoutUserMessage.generated.cs">
       <DependentUpon>Server.Login.ContractCodeGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,10 +91,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Server.Login.ContractCodeGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="Server.Login.ServiceCodeGenerator.cs">
+    <Compile Include="Server.Login.ClientServiceCodeGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Server.Login.ServiceCodeGenerator.tt</DependentUpon>
+      <DependentUpon>Server.Login.ClientServiceCodeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServerExposed\UserList.Server.cs" />
+    <Compile Include="TokenUsage.generated.cs">
+      <DependentUpon>Server.Login.Code.tt</DependentUpon>
     </Compile>
     <Compile Include="User.generated.cs">
       <DependentUpon>Server.Login.Code.tt</DependentUpon>
@@ -81,9 +106,19 @@
     <Compile Include="UserList.generated.cs">
       <DependentUpon>Server.Login.Code.tt</DependentUpon>
     </Compile>
+    <Compile Include="VerifyTokenMessage.generated.cs">
+      <DependentUpon>Server.Login.ContractCodeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VerifyTokenResponseMessage.generated.cs">
+      <DependentUpon>Server.Login.ContractCodeGenerator.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Server.Login.ServerServiceCodeGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Server.Login.ServerServiceCodeGenerator.cs</LastGenOutput>
+    </None>
     <None Include="Server.Login.Code.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Server.Login.Code.cs</LastGenOutput>
@@ -92,9 +127,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Server.Login.ContractCodeGenerator.cs</LastGenOutput>
     </None>
-    <None Include="Server.Login.ServiceCodeGenerator.tt">
+    <None Include="Server.Login.ClientServiceCodeGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Server.Login.ServiceCodeGenerator.cs</LastGenOutput>
+      <LastGenOutput>Server.Login.ClientServiceCodeGenerator.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
