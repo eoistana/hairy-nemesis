@@ -10,7 +10,7 @@ namespace Server.Login
 	/// Singleton class for the list of users
 	/// 
 	/// </summary>
-	public partial class UserList
+	public partial class UserList : IEquatable<UserList>
 	{
 		private static UserList singleton = null;
 		public static UserList Singleton
@@ -31,6 +31,21 @@ namespace Server.Login
 		}
 
 		partial void OnUserListInit();
+
+		public bool Equals(UserList obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override bool Equals(object obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override int GetHashCode()
+		{
+		  return base.GetHashCode();
+		}
 
 		#region List access
 

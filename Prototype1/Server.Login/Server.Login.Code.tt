@@ -23,7 +23,7 @@ foreach(var d in parser.Data.Values)
 {
 	manager.StartNewFile(string.Format("{0}.generated.cs", d.Name)); #>
 	<#=d.GetSummary("	")#>
-	public partial class <#=d.Name#><#=d.GetBase()#>
+	public partial class <#=d.Name#><#=d.GetBase()#><#=d.GetEqualityInterface()#>
 	{
 <#=d.GetFieldDeclarations("		")
 #><#=d.GetListDeclarations("		")
@@ -50,6 +50,21 @@ foreach(var d in parser.Data.Values)
 		}
 
 		partial void On<#=d.Name#>Init();
+
+		public bool Equals(<#=d.Name#> obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override bool Equals(object obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override int GetHashCode()
+		{
+		  return base.GetHashCode();
+		}
 <#@include file="..\Configuration\ListAccess.include.tt"
 #><#@include file="..\Configuration\Events.include.tt"#>
 

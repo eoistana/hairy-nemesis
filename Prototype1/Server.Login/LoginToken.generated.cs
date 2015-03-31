@@ -10,7 +10,7 @@ namespace Server.Login
 	/// Session token
 	/// 
 	/// </summary>
-	public partial class LoginToken
+	public partial class LoginToken : IEquatable<LoginToken>
 	{
 		
 		public string Token;
@@ -22,6 +22,21 @@ namespace Server.Login
 		}
 
 		partial void OnLoginTokenInit();
+
+		public bool Equals(LoginToken obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override bool Equals(object obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override int GetHashCode()
+		{
+		  return base.GetHashCode();
+		}
 
 	}
 }

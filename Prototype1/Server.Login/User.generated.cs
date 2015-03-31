@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Server.Login
 {
 	
-	public partial class User
+	public partial class User : IEquatable<User>
 	{
 		/// <summary>
 		/// The username
@@ -26,6 +26,21 @@ namespace Server.Login
 		}
 
 		partial void OnUserInit();
+
+		public bool Equals(User obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override bool Equals(object obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override int GetHashCode()
+		{
+		  return base.GetHashCode();
+		}
 
 		#region List access
 

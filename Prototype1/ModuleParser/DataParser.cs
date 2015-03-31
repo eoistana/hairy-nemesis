@@ -117,7 +117,7 @@ namespace ModulesParser
     public string GetEqualityInterface()
     {
       var eq = "IEquatable<" + Name + ">";
-      return (Base != null) ? " : " : ", " + eq;
+      return ((Base == null) ? " : " : ", ") + eq;
     }
 
     public string GetCtorParams()

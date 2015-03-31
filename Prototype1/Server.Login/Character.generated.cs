@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Server.Login
 {
 	
-	public partial class Character
+	public partial class Character : IEquatable<Character>
 	{
 		
 		public string Name;
@@ -18,6 +18,21 @@ namespace Server.Login
 		}
 
 		partial void OnCharacterInit();
+
+		public bool Equals(Character obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override bool Equals(object obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override int GetHashCode()
+		{
+		  return base.GetHashCode();
+		}
 
 	}
 }

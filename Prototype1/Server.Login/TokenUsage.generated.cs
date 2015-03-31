@@ -10,7 +10,7 @@ namespace Server.Login
 	/// Holds the currently valid tokens
 	/// 
 	/// </summary>
-	public partial class TokenUsage
+	public partial class TokenUsage : IEquatable<TokenUsage>
 	{
 		
 		public LoginToken Token;
@@ -26,6 +26,21 @@ namespace Server.Login
 		}
 
 		partial void OnTokenUsageInit();
+
+		public bool Equals(TokenUsage obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override bool Equals(object obj)
+		{
+		  return base.Equals(obj);
+		}
+
+		public override int GetHashCode()
+		{
+		  return base.GetHashCode();
+		}
 
 	}
 }
