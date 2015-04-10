@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace API
 {
   public abstract class XFoo : IFoo
@@ -29,7 +23,6 @@ namespace API
 
     public virtual void Do(ExtendContext context)
     {
-      return;
     }
 
     public virtual int Do2(ExtendContext<int> context, int x, int y)

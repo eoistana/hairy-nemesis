@@ -9,7 +9,7 @@
   {
     public bool Override;
 
-    public virtual void SetValue<T1>(T1 result)
+    public void SetValue<T1>(T1 result)
     {
       (this as ExtendContext<T1>).LastValue = result;
     }

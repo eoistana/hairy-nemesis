@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 
 namespace API
 {
@@ -61,9 +59,9 @@ namespace API
       if (!ClassNames.ContainsKey(typeof (T)))
         throw new ArgumentOutOfRangeException("T", "Type " + typeof (T).Name + " is not an extendable class.");
       if (!ClassNames[typeof (T)].ContainsKey(modName))
-        throw new ArgumentOutOfRangeException("name", "Mod " + modName + " does not extend " + typeof (T).Name);
+        throw new ArgumentOutOfRangeException("modName", "Mod " + modName + " does not extend " + typeof (T).Name);
       if (!ClassNames[typeof(T)][modName].ContainsKey(className))
-        throw new ArgumentOutOfRangeException("name", "Class " + className + " from mod " + modName + " does not extend " + typeof(T).Name);
+        throw new ArgumentOutOfRangeException("className", "Class " + className + " from mod " + modName + " does not extend " + typeof(T).Name);
       return ClassNames[typeof (T)][modName][className].Item2;
     }
 
