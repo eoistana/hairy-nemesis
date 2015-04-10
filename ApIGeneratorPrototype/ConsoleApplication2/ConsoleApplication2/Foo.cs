@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using API;
 
 namespace ConsoleApplication2
 {
-  public class Foo : IFoo
+  public partial class Foo : IFoo, IExtendableClass<IFoo>
   {
     public int Type { get; set; }
 
-    private readonly SortedList<int, IFoo> foos = new SortedList<int, IFoo>();
+    private readonly SortedList<int, IFoo> extensionClasses = new SortedList<int, IFoo>();
+    SortedList<int, IFoo> IExtendableClass<IFoo>.ExtensionClasses { get { return extensionClasses; } }
 
     static Foo()
     {
@@ -17,51 +19,75 @@ namespace ConsoleApplication2
     public Foo(int type)
     {
       Type = type;
-      ExtensionAssemblies.AddExtensions(this, foos);
-    }
-
-    public IFoo GetExtension(string name)
-    {
-      return foos[ClassExtender.GetClassSortOrder<IFoo>(name)];
+      ExtensionAssemblies.AddExtensions(this, extensionClasses);
     }
 
     public int Calc()
     {
-      return ExtensionAssemblies.CallExtended<IFoo, int>(this, foos, x => x.Calc);
+      return ExtensionAssemblies.CallExtended<IFoo, int>(this, extensionClasses, x => x.Calc);
     }
 
     public void Do()
     {
-      ExtensionAssemblies.CallExtended(this, foos, x => x.Do);
+      ExtensionAssemblies.CallExtended(this, extensionClasses, x => x.Do);
     }
 
     public int Do2(int x, int y)
     {
-      return ExtensionAssemblies.CallExtended<IFoo, int, int, int>(this, foos, d => d.Do2, x, y);
+      return ExtensionAssemblies.CallExtended<IFoo, int, int, int>(this, extensionClasses, d => d.Do2, x, y);
     }
 
     #region IFoo
 
+    int IFoo.Type
+    {
+      get { return Type; }
+      set { Type = value; }
+    }
+
+    partial void IFooCalc(ExtendContext<int> context);
     int IFoo.Calc(ExtendContext<int> context)
     {
-      if (context.Override)
-        return context.LastValue;
-      return 5;
+      IFooCalc(context);
+      return context.LastValue;
     }
 
+    partial void IFooDo(ExtendContext context);
     void IFoo.Do(ExtendContext context)
     {
-      if (context.Override)
-        return;
+      IFooDo(context);
     }
 
+    partial void IFooDo2(ExtendContext<int> context, int x, int y);
     int IFoo.Do2(ExtendContext<int> context, int x, int y)
     {
-      if (context.Override)
-        return context.LastValue;
-      return 1;
+      IFooDo2(context, x, y);
+      return context.LastValue;
     }
 
     #endregion
+
+  }
+
+
+  public partial class Foo
+  {
+    partial void IFooCalc(ExtendContext<int> context)
+    {
+      if (context.Override) return;
+
+      context.LastValue = 5;
+    }
+
+    partial void IFooDo(ExtendContext context)
+    {
+      if (context.Override) return;
+    }
+
+    partial void IFooDo2(ExtendContext<int> context, int x, int y)
+    {
+      if (context.Override) return;
+      context.LastValue = 1;
+    }
   }
 }

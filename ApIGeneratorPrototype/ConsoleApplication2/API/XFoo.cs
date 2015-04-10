@@ -38,9 +38,9 @@ namespace API
     }
 
 
-    public IFoo GetExtension(string name)
+    public IFoo GetExtension(string modName, string className)
     {
-      return Parent.GetExtension(name);
+      return ClassExtender.GetExtensionClass(Parent, modName, className);
     }
   }
 

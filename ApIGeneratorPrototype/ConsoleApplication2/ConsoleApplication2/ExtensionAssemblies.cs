@@ -37,47 +37,55 @@ namespace ConsoleApplication2
       return assembly;
     }
 
-    public static void CallExtended<TExtendableClass>(TExtendableClass obj, SortedList<int, TExtendableClass> foos, Expression<Func<TExtendableClass, Action<ExtendContext>>> f)
+    public static void CallExtended<TExtendableClass>(TExtendableClass obj,
+      SortedList<int, TExtendableClass> extenstionClasses,
+      Expression<Func<TExtendableClass, Action<ExtendContext>>> overrideMethod)
     {
       var context = new ExtendContext();
       var par = new object[] {context};
 
-      LastValue(foos.Values.Select(arg => (object)arg), f, par);
+      LastValue(extenstionClasses.Values.Select(arg => (object) arg), overrideMethod, par);
     }
 
-    public static TReturn CallExtended<TExtendableClass, TReturn>(TExtendableClass obj, SortedList<int, TExtendableClass> foos, Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, TReturn>>> f)
+    public static TReturn CallExtended<TExtendableClass, TReturn>(TExtendableClass obj,
+      SortedList<int, TExtendableClass> extensionClasses,
+      Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, TReturn>>> overrideMethod)
     {
-      var context = new ExtendContext<TReturn> { LastValue = default(TReturn) };
-      var par = new object[] { context };
+      var context = new ExtendContext<TReturn> {LastValue = default(TReturn)};
+      var par = new object[] {context};
 
-      return LastValue<TReturn>(foos.Values.Select(arg => (object)arg), f, par, context);
+      return LastValue<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
     }
 
-    public static TReturn CallExtended<TExtendableClass, TReturn, T1>(TExtendableClass obj, SortedList<int, TExtendableClass> foos, Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, T1, TReturn>>> f, T1 t1)
+    public static TReturn CallExtended<TExtendableClass, TReturn, T1>(TExtendableClass obj,
+      SortedList<int, TExtendableClass> extensionClasses,
+      Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, T1, TReturn>>> overrideMethod, T1 t1)
     {
-      var context = new ExtendContext<TReturn> { LastValue = default(TReturn) };
-      var par = new object[] { context, t1 };
+      var context = new ExtendContext<TReturn> {LastValue = default(TReturn)};
+      var par = new object[] {context, t1};
 
-      return LastValue<TReturn>(foos.Values.Select(arg => (object)arg), f, par, context);
+      return LastValue<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
     }
 
-    public static TReturn CallExtended<TExtendableClass, TReturn, T1, T2>(TExtendableClass obj, SortedList<int, TExtendableClass> foos, Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, T1, T2, TReturn>>> f, T1 t1, T2 t2)
+    public static TReturn CallExtended<TExtendableClass, TReturn, T1, T2>(TExtendableClass obj,
+      SortedList<int, TExtendableClass> extensionClasses,
+      Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, T1, T2, TReturn>>> overrideMethod, T1 t1, T2 t2)
     {
-      var context = new ExtendContext<TReturn> { LastValue = default(TReturn) };
-      var par = new object[] { context, t1, t2 };
+      var context = new ExtendContext<TReturn> {LastValue = default(TReturn)};
+      var par = new object[] {context, t1, t2};
 
-      return LastValue<TReturn>(foos.Values.Select(arg => (object)arg), f, par, context);
+      return LastValue<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
     }
 
-    private static TReturn LastValue<TReturn>(IEnumerable<object> foos, Expression f, object[] par,
+    private static TReturn LastValue<TReturn>(IEnumerable<object> extensionClasses, Expression overrideMethod, object[] par,
       ExtendContext context)
     {
       var mi =
-        ((((((LambdaExpression) f).Body as UnaryExpression).Operand as MethodCallExpression).Object as
+        ((((((LambdaExpression) overrideMethod).Body as UnaryExpression).Operand as MethodCallExpression).Object as
           ConstantExpression).Value) as MethodInfo;
       foreach (
         var result in
-          foos.Select(
+          extensionClasses.Select(
             foo =>
               (TReturn)
                 mi.Invoke(foo, BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod, null, par, null))
@@ -88,22 +96,24 @@ namespace ConsoleApplication2
       return context.GetValue<TReturn>();
     }
 
-    private static void LastValue(IEnumerable<object> foos, Expression f, object[] par)
+    private static void LastValue(IEnumerable<object> extensionClasses, Expression overrideMethod, object[] par)
     {
-      var mi = ((((((LambdaExpression)f).Body as UnaryExpression).Operand as MethodCallExpression).Object as ConstantExpression).Value) as MethodInfo;
+      var mi = ((((((LambdaExpression)overrideMethod).Body as UnaryExpression).Operand as MethodCallExpression).Object as ConstantExpression).Value) as MethodInfo;
       foreach (
         var result in
-          foos)
+          extensionClasses)
         mi.Invoke(result, BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod, null, par, null);
     }
 
-    public static void AddExtensions<TExtendableClass>(TExtendableClass obj, SortedList<int, TExtendableClass> foos)
+    public static void AddExtensions<TExtendableClass>(TExtendableClass obj,
+      SortedList<int, TExtendableClass> extensionClasses)
+      where TExtendableClass : class
     {
-      foos.Add(0, obj);
+      extensionClasses.Add(0, obj);
       foreach (var f in ClassExtender.GetInstanceCreators<TExtendableClass>())
       {
         var ff = f.Value(obj);
-        if (ff != null) foos.Add(f.Key, ff);
+        if (ff != null) extensionClasses.Add(f.Key, ff);
       }
     }
   }

@@ -16,8 +16,8 @@ namespace ConsoleApplication2
       var i = f.Calc();
 
 
-      var assembly = ExtensionAssemblies.AddAssembly(@"c:\users\staale.kvernes\documents\visual studio 2013\Projects\ConsoleApplication2\Extension1\bin\Debug\Extension1.dll");
-
+      var assembly = ExtensionAssemblies.AddAssembly(@"C:\Users\staale.kvernes\Documents\GitHub\hairy-nemesis\ApIGeneratorPrototype\ConsoleApplication2\Extension1\bin\Debug\Extension1.dll");
+      
       ExtensionAssemblies.RegisterTypes<XFoo>();
 
       var i2 = f.Calc();
@@ -31,7 +31,7 @@ namespace ConsoleApplication2
       f = new Foo(1);
       var i5 = f.Calc();
 
-      var ifoo = f.GetExtension("Extension1.Bar");
+      var ifoo = ClassExtender.GetExtensionClass<IFoo>(f, "Extension1", "Bar");
 
 
 

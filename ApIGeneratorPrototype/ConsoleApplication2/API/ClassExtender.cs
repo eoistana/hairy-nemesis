@@ -22,8 +22,8 @@ namespace API
 
   public static class ClassExtender
   {
-    private static readonly Dictionary<Type, Dictionary<string, Tuple<Type, int>>> ClassNames =
-      new Dictionary<Type, Dictionary<string, Tuple<Type, int>>>();
+    private static readonly Dictionary<Type, Dictionary<string, Dictionary<string, Tuple<Type, int>>>> ClassNames =
+      new Dictionary<Type, Dictionary<string, Dictionary<string, Tuple<Type, int>>>>();
 
     private static readonly Dictionary<Type, SortedList<int, CreatorContainerBase>> InstanceCreators =
       new Dictionary<Type, SortedList<int, CreatorContainerBase>>();
@@ -32,9 +32,11 @@ namespace API
       where TExtenderClass : TApiInterface
     {
       var extensionAttribute = typeof(TExtenderClass).GetCustomAttribute<ExtensionAttribute>();
-      if (!ClassNames.ContainsKey(typeof(TApiInterface)))
-        ClassNames.Add(typeof(TApiInterface), new Dictionary<string, Tuple<Type, int>>());
-      ClassNames[typeof(TApiInterface)].Add(extensionAttribute.Mod + "." + extensionAttribute.Name, new Tuple<Type, int>(typeof(TExtenderClass), sortOrder));
+      if (!ClassNames.ContainsKey(typeof (TApiInterface)))
+        ClassNames.Add(typeof (TApiInterface), new Dictionary<string, Dictionary<string, Tuple<Type, int>>>());
+      if (!ClassNames[typeof(TApiInterface)].ContainsKey(extensionAttribute.Mod))
+        ClassNames[typeof(TApiInterface)].Add(extensionAttribute.Mod, new Dictionary<string, Tuple<Type, int>>());
+      ClassNames[typeof(TApiInterface)][extensionAttribute.Mod].Add(extensionAttribute.Name, new Tuple<Type, int>(typeof(TExtenderClass), sortOrder));
 
       if (!InstanceCreators.ContainsKey(typeof(TApiInterface)))
         InstanceCreators.Add(typeof(TApiInterface), new SortedList<int, CreatorContainerBase>());
@@ -54,13 +56,24 @@ namespace API
       }
     }
 
-    public static int GetClassSortOrder<T>(string name)
+    public static int GetClassSortOrder<T>(string modName, string className)
     {
       if (!ClassNames.ContainsKey(typeof (T)))
         throw new ArgumentOutOfRangeException("T", "Type " + typeof (T).Name + " is not an extendable class.");
-      if (!ClassNames[typeof (T)].ContainsKey(name))
-        throw new ArgumentOutOfRangeException("name", "Class " + name + " does not extend " + typeof (T).Name);
-      return ClassNames[typeof (T)][name].Item2;
+      if (!ClassNames[typeof (T)].ContainsKey(modName))
+        throw new ArgumentOutOfRangeException("name", "Mod " + modName + " does not extend " + typeof (T).Name);
+      if (!ClassNames[typeof(T)][modName].ContainsKey(className))
+        throw new ArgumentOutOfRangeException("name", "Class " + className + " from mod " + modName + " does not extend " + typeof(T).Name);
+      return ClassNames[typeof (T)][modName][className].Item2;
+    }
+
+    public static TExtendableClass GetExtensionClass<TExtendableClass>(TExtendableClass foo, string modName, string className)
+    {
+      var classSortOrder = GetClassSortOrder<TExtendableClass>(modName, className);
+      var extendableClass = foo as IExtendableClass<TExtendableClass>;
+      if (extendableClass != null)
+        return extendableClass.ExtensionClasses[classSortOrder];
+      throw new NotSupportedException(String.Format("{0} is not an API class.", typeof (TExtendableClass).Name));
     }
   }
 }
