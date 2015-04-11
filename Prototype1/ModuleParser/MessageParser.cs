@@ -12,6 +12,7 @@ namespace ModulesParser
   public class MessageParser : Parser
   {
     public bool ExposedToClient;
+    public string Description;
     public Dictionary<string, ParameterParser> Parameters = new Dictionary<string, ParameterParser>();
     public Dictionary<string, ReturnsParser> ReturnValue = new Dictionary<string, ReturnsParser>();
 
@@ -23,6 +24,7 @@ namespace ModulesParser
     public override void Parse(ModuleParser moduleParser, DataParser data)
     {
       ExposedToClient = (Node.Attributes["expose"] != null) ? Node.Attributes["expose"].InnerText == "true" : false;
+      Description = Node.Attributes["description"] != null ? Node.Attributes["description"].InnerText : null;
       Parse(moduleParser, data, Parameters, "./en:Parameter");
       Parse(moduleParser, data, ReturnValue, "./en:Returns", "ref");
     }
@@ -36,5 +38,11 @@ namespace ModulesParser
       foreach (var p in Parameters.Values) p.ValidateReferences(simpleTypes, data, enums, events, messages);
       foreach (var r in ReturnValue.Values) r.ValidateReferences(simpleTypes, data, enums, events, messages);
     }
+
+    internal string GetSummary(string tabs)
+    {
+      return DataParser.GetSummary(tabs, Description);
+    }
+
   }
 }

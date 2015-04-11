@@ -46,7 +46,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Core.Authentification.xml" />
+    <Content Include="Core.Authentification.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Core.Entities.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
