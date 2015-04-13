@@ -44,7 +44,7 @@ namespace ConsoleApplication2
       var context = new ExtendContext();
       var par = new object[] {context};
 
-      LastValue(extenstionClasses.Values.Select(arg => (object) arg), overrideMethod, par);
+      ProcessExtendedCall(extenstionClasses.Values.Select(arg => (object) arg), overrideMethod, par);
     }
 
     public static TReturn CallExtended<TExtendableClass, TReturn>(TExtendableClass obj,
@@ -54,7 +54,7 @@ namespace ConsoleApplication2
       var context = new ExtendContext<TReturn> {LastValue = default(TReturn)};
       var par = new object[] {context};
 
-      return LastValue<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
+      return ProcessExtendedCall<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
     }
 
     public static TReturn CallExtended<TExtendableClass, TReturn, T1>(TExtendableClass obj,
@@ -64,7 +64,7 @@ namespace ConsoleApplication2
       var context = new ExtendContext<TReturn> {LastValue = default(TReturn)};
       var par = new object[] {context, t1};
 
-      return LastValue<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
+      return ProcessExtendedCall<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
     }
 
     public static TReturn CallExtended<TExtendableClass, TReturn, T1, T2>(TExtendableClass obj,
@@ -74,10 +74,10 @@ namespace ConsoleApplication2
       var context = new ExtendContext<TReturn> {LastValue = default(TReturn)};
       var par = new object[] {context, t1, t2};
 
-      return LastValue<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
+      return ProcessExtendedCall<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
     }
 
-    private static TReturn LastValue<TReturn>(IEnumerable<object> extensionClasses, Expression overrideMethod, object[] par,
+    private static TReturn ProcessExtendedCall<TReturn>(IEnumerable<object> extensionClasses, Expression overrideMethod, object[] par,
       ExtendContext context)
     {
       var mi =
@@ -96,7 +96,7 @@ namespace ConsoleApplication2
       return context.GetValue<TReturn>();
     }
 
-    private static void LastValue(IEnumerable<object> extensionClasses, Expression overrideMethod, object[] par)
+    private static void ProcessExtendedCall(IEnumerable<object> extensionClasses, Expression overrideMethod, object[] par)
     {
       var mi = ((((((LambdaExpression)overrideMethod).Body as UnaryExpression).Operand as MethodCallExpression).Object as ConstantExpression).Value) as MethodInfo;
       foreach (
