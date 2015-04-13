@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassExtender.cs" />
+    <Compile Include="ExtensionAssemblyAttribute.cs" />
     <Compile Include="IExtendableClass.cs" />
     <Compile Include="XFoo.cs" />
     <Compile Include="ExtendContext.cs" />

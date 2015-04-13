@@ -7,16 +7,18 @@
 
   public class ExtendContext
   {
-    public bool Override;
+    public bool SupressOriginalCall;
 
     public void SetValue<T1>(T1 result)
     {
-      (this as ExtendContext<T1>).LastValue = result;
+      var extendContext = this as ExtendContext<T1>;
+      if (extendContext != null) extendContext.LastValue = result;
     }
 
     public T1 GetValue<T1>()
     {
-      return (this as ExtendContext<T1>).LastValue;
+      var extendContext = this as ExtendContext<T1>;
+      return extendContext != null ? extendContext.LastValue : default(T1);
     }
   }
 }

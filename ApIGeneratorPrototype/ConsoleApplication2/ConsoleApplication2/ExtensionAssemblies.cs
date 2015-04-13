@@ -1,15 +1,38 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using API;
+using System.IO;
 
 namespace ConsoleApplication2
 {
   public static class ExtensionAssemblies
   {
     public static Dictionary<Assembly, bool> Assemblies = new Dictionary<Assembly, bool>();
+
+    internal static void LoadExtensions()
+    {
+      var files = Directory.EnumerateFiles("mods", "*.dll");
+      foreach (var f in files)
+      {
+        AddAssembly(Path.GetFullPath(f));
+      }
+    }
+
+    internal static Assembly AddAssembly(string path)
+    {
+      var assembly = Assembly.LoadFile(path);
+      if (Assemblies.ContainsKey(assembly)) UnregisterTypes(assembly);
+      Assemblies[assembly] = false;
+      return assembly;
+    }
+
+    internal static void UnregisterTypes(Assembly assembly)
+    {
+    }
 
     internal static void RegisterTypes<T>(IEnumerable<Type> types = null)
     {
@@ -30,52 +53,182 @@ namespace ConsoleApplication2
       }
     }
 
-    internal static Assembly AddAssembly(string path)
+    private static SortedList<int, TExtendableClass> GetExtensionClasses<TExtendableClass>(TExtendableClass obj)
     {
-      var assembly = Assembly.LoadFile(path);
-      Assemblies.Add(assembly, false);
-      return assembly;
+      if (!(obj is IExtendableClass<TExtendableClass>))
+        throw new ArgumentException("Supplied object is not an IExtendableClass", "obj");
+      return (obj as IExtendableClass<TExtendableClass>).ExtensionClasses;
     }
 
-    public static void CallExtended<TExtendableClass>(TExtendableClass obj,
-      SortedList<int, TExtendableClass> extenstionClasses,
+    #region Actions
+
+    public static void CallExtendedAction<TExtendableClass>(
+      TExtendableClass obj,
       Expression<Func<TExtendableClass, Action<ExtendContext>>> overrideMethod)
     {
+      var extensionClasses = GetExtensionClasses(obj);
       var context = new ExtendContext();
       var par = new object[] {context};
 
-      ProcessExtendedCall(extenstionClasses.Values.Select(arg => (object) arg), overrideMethod, par);
+      ProcessExtendedCall(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par);
     }
 
-    public static TReturn CallExtended<TExtendableClass, TReturn>(TExtendableClass obj,
-      SortedList<int, TExtendableClass> extensionClasses,
+    public static void CallExtendedAction<TExtendableClass, T1>(
+      TExtendableClass obj,
+      Expression<Func<TExtendableClass, Action<ExtendContext, T1>>> overrideMethod,
+      T1 t1)
+    {
+      var extensionClasses = GetExtensionClasses(obj);
+      var context = new ExtendContext();
+      var par = new object[] { context, t1};
+
+      ProcessExtendedCall(extensionClasses.Values.Select(arg => (object)arg), overrideMethod, par);
+    }
+
+    public static void CallExtendedAction<TExtendableClass, T1, T2>(
+      TExtendableClass obj,
+      Expression<Func<TExtendableClass, Action<ExtendContext, T1, T2>>> overrideMethod,
+      T1 t1,
+      T2 t2)
+    {
+      var extensionClasses = GetExtensionClasses(obj);
+      var context = new ExtendContext();
+      var par = new object[] { context, t1, t2 };
+
+      ProcessExtendedCall(extensionClasses.Values.Select(arg => (object)arg), overrideMethod, par);
+    }
+
+    public static void CallExtendedAction<TExtendableClass, T1, T2, T3>(
+      TExtendableClass obj,
+      Expression<Func<TExtendableClass, Action<ExtendContext, T1, T2, T3>>> overrideMethod,
+      T1 t1,
+      T2 t2,
+      T3 t3)
+    {
+      var extensionClasses = GetExtensionClasses(obj);
+      var context = new ExtendContext();
+      var par = new object[] { context, t1, t2, t3 };
+
+      ProcessExtendedCall(extensionClasses.Values.Select(arg => (object)arg), overrideMethod, par);
+    }
+
+    public static void CallExtendedAction<TExtendableClass, T1, T2, T3, T4>(
+      TExtendableClass obj,
+      Expression<Func<TExtendableClass, Action<ExtendContext, T1, T2, T3, T4>>> overrideMethod,
+      T1 t1,
+      T2 t2,
+      T3 t3,
+      T4 t4)
+    {
+      var extensionClasses = GetExtensionClasses(obj);
+      var context = new ExtendContext();
+      var par = new object[] { context, t1, t2, t3, t4 };
+
+      ProcessExtendedCall(extensionClasses.Values.Select(arg => (object)arg), overrideMethod, par);
+    }
+
+    public static void CallExtendedAction<TExtendableClass, T1, T2, T3, T4, T5>(
+      TExtendableClass obj,
+      Expression<Func<TExtendableClass, Action<ExtendContext, T1, T2, T3, T4, T5>>> overrideMethod,
+      T1 t1,
+      T2 t2,
+      T3 t3,
+      T4 t4,
+      T5 t5)
+    {
+      var extensionClasses = GetExtensionClasses(obj);
+      var context = new ExtendContext();
+      var par = new object[] {context, t1, t2, t3, t4, t5};
+
+      ProcessExtendedCall(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par);
+    }
+
+    #endregion
+
+    #region Functions
+
+    public static TReturn CallExtended<TExtendableClass, TReturn>(
+      TExtendableClass obj, 
       Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, TReturn>>> overrideMethod)
     {
-      var context = new ExtendContext<TReturn> {LastValue = default(TReturn)};
+      var extensionClasses = GetExtensionClasses(obj);
+      var context = new ExtendContext<TReturn> { LastValue = default(TReturn) };
       var par = new object[] {context};
 
       return ProcessExtendedCall<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
     }
 
-    public static TReturn CallExtended<TExtendableClass, TReturn, T1>(TExtendableClass obj,
-      SortedList<int, TExtendableClass> extensionClasses,
-      Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, T1, TReturn>>> overrideMethod, T1 t1)
+    public static TReturn CallExtended<TExtendableClass, TReturn, T1>(
+      TExtendableClass obj, 
+      Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, T1, TReturn>>> overrideMethod, 
+      T1 t1)
     {
-      var context = new ExtendContext<TReturn> {LastValue = default(TReturn)};
+      var extensionClasses = GetExtensionClasses(obj);
+      var context = new ExtendContext<TReturn> { LastValue = default(TReturn) };
       var par = new object[] {context, t1};
 
       return ProcessExtendedCall<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
     }
 
-    public static TReturn CallExtended<TExtendableClass, TReturn, T1, T2>(TExtendableClass obj,
-      SortedList<int, TExtendableClass> extensionClasses,
-      Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, T1, T2, TReturn>>> overrideMethod, T1 t1, T2 t2)
+    public static TReturn CallExtended<TExtendableClass, TReturn, T1, T2>(
+      TExtendableClass obj, 
+      Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, T1, T2, TReturn>>> overrideMethod, 
+      T1 t1, 
+      T2 t2)
     {
-      var context = new ExtendContext<TReturn> {LastValue = default(TReturn)};
+      var extensionClasses = GetExtensionClasses(obj);
+      var context = new ExtendContext<TReturn> { LastValue = default(TReturn) };
       var par = new object[] {context, t1, t2};
 
       return ProcessExtendedCall<TReturn>(extensionClasses.Values.Select(arg => (object) arg), overrideMethod, par, context);
     }
+
+    public static TReturn CallExtended<TExtendableClass, TReturn, T1, T2, T3>(
+      TExtendableClass obj,
+      Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, T1, T2, T3, TReturn>>> overrideMethod,
+      T1 t1,
+      T2 t2,
+      T3 t3)
+    {
+      var extensionClasses = GetExtensionClasses(obj);
+      var context = new ExtendContext<TReturn> { LastValue = default(TReturn) };
+      var par = new object[] { context, t1, t2, t3 };
+
+      return ProcessExtendedCall<TReturn>(extensionClasses.Values.Select(arg => (object)arg), overrideMethod, par, context);
+    }
+
+    public static TReturn CallExtended<TExtendableClass, TReturn, T1, T2, T3, T4>(
+      TExtendableClass obj,
+      Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, T1, T2, T3, T4, TReturn>>> overrideMethod,
+      T1 t1,
+      T2 t2,
+      T3 t3,
+      T4 t4)
+    {
+      var extensionClasses = GetExtensionClasses(obj);
+      var context = new ExtendContext<TReturn> { LastValue = default(TReturn) };
+      var par = new object[] { context, t1, t2, t3, t4 };
+
+      return ProcessExtendedCall<TReturn>(extensionClasses.Values.Select(arg => (object)arg), overrideMethod, par, context);
+    }
+
+    public static TReturn CallExtended<TExtendableClass, TReturn, T1, T2, T3, T4, T5>(
+      TExtendableClass obj,
+      Expression<Func<TExtendableClass, Func<ExtendContext<TReturn>, T1, T2, T3, T4, T5, TReturn>>> overrideMethod,
+      T1 t1,
+      T2 t2,
+      T3 t3,
+      T4 t4,
+      T5 t5)
+    {
+      var extensionClasses = GetExtensionClasses(obj);
+      var context = new ExtendContext<TReturn> { LastValue = default(TReturn) };
+      var par = new object[] { context, t1, t2, t3, t4, t5 };
+
+      return ProcessExtendedCall<TReturn>(extensionClasses.Values.Select(arg => (object)arg), overrideMethod, par, context);
+    }
+
+    #endregion
 
     private static TReturn ProcessExtendedCall<TReturn>(IEnumerable<object> extensionClasses, Expression overrideMethod, object[] par,
       ExtendContext context)
@@ -105,10 +258,10 @@ namespace ConsoleApplication2
         mi.Invoke(result, BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod, null, par, null);
     }
 
-    public static void AddExtensions<TExtendableClass>(TExtendableClass obj,
-      SortedList<int, TExtendableClass> extensionClasses)
+    public static void AddExtensions<TExtendableClass>(TExtendableClass obj)
       where TExtendableClass : class
     {
+      var extensionClasses = GetExtensionClasses(obj);
       extensionClasses.Add(0, obj);
       foreach (var f in ClassExtender.GetInstanceCreators<TExtendableClass>())
       {

@@ -1,9 +1,6 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using API;
-
 
 namespace ConsoleApplication2
 {
@@ -17,6 +14,7 @@ namespace ConsoleApplication2
       var i = f.Calc();
 
 
+      ExtensionAssemblies.LoadExtensions();
       var assembly = ExtensionAssemblies.AddAssembly(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\mods\Extension1.dll");
       
       ExtensionAssemblies.RegisterTypes<XFoo>();

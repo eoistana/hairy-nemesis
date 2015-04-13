@@ -19,22 +19,22 @@ namespace ConsoleApplication2
     public Foo(int type)
     {
       Type = type;
-      ExtensionAssemblies.AddExtensions(this, extensionClasses);
+      ExtensionAssemblies.AddExtensions<IFoo>(this);
     }
 
     public int Calc()
     {
-      return ExtensionAssemblies.CallExtended<IFoo, int>(this, extensionClasses, x => x.Calc);
+      return ExtensionAssemblies.CallExtended<IFoo, int>(this, x => x.Calc);
     }
 
     public void Do()
     {
-      ExtensionAssemblies.CallExtended(this, extensionClasses, x => x.Do);
+      ExtensionAssemblies.CallExtendedAction<IFoo>(this, x => x.Do);
     }
 
     public int Do2(int x, int y)
     {
-      return ExtensionAssemblies.CallExtended<IFoo, int, int, int>(this, extensionClasses, d => d.Do2, x, y);
+      return ExtensionAssemblies.CallExtended<IFoo, int, int, int>(this, d => d.Do2, x, y);
     }
 
     #region IFoo
@@ -74,19 +74,19 @@ namespace ConsoleApplication2
   {
     partial void IFooCalc(ExtendContext<int> context)
     {
-      if (context.Override) return;
+      if (context.SupressOriginalCall) return;
 
       context.LastValue = 5;
     }
 
     partial void IFooDo(ExtendContext context)
     {
-      if (context.Override) return;
+      if (context.SupressOriginalCall) return;
     }
 
     partial void IFooDo2(ExtendContext<int> context, int x, int y)
     {
-      if (context.Override) return;
+      if (context.SupressOriginalCall) return;
       context.LastValue = 1;
     }
   }
