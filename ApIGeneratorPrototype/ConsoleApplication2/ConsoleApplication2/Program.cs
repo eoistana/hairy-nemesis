@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using API;
@@ -16,7 +17,7 @@ namespace ConsoleApplication2
       var i = f.Calc();
 
 
-      var assembly = ExtensionAssemblies.AddAssembly(@"C:\Users\staale.kvernes\Documents\GitHub\hairy-nemesis\ApIGeneratorPrototype\ConsoleApplication2\Extension1\bin\Debug\Extension1.dll");
+      var assembly = ExtensionAssemblies.AddAssembly(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\mods\Extension1.dll");
       
       ExtensionAssemblies.RegisterTypes<XFoo>();
 
