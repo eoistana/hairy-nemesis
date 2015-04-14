@@ -20,13 +20,13 @@ namespace Extension1
       return new Bar(foo);
     }
 
-    public override int Calc(ExtendContext<int> context)
+    public override int Calc(ExtensionContext<int> context)
     {
       context.SupressOriginalCall = true;
       return 17;
     }
 
-    public override int Do2(ExtendContext<int> context, int x, int y)
+    public override int Do2(ExtensionContext<int> context, int x, int y)
     {
       context.SupressOriginalCall = true;
       return x*y;

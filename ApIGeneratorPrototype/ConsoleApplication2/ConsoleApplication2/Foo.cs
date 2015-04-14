@@ -45,21 +45,21 @@ namespace ConsoleApplication2
       set { Type = value; }
     }
 
-    partial void IFooCalc(ExtendContext<int> context);
-    int IFoo.Calc(ExtendContext<int> context)
+    partial void IFooCalc(ExtensionContext<int> context);
+    int IFoo.Calc(ExtensionContext<int> context)
     {
       IFooCalc(context);
       return context.LastValue;
     }
 
-    partial void IFooDo(ExtendContext context);
-    void IFoo.Do(ExtendContext context)
+    partial void IFooDo(ExtensionContext context);
+    void IFoo.Do(ExtensionContext context)
     {
       IFooDo(context);
     }
 
-    partial void IFooDo2(ExtendContext<int> context, int x, int y);
-    int IFoo.Do2(ExtendContext<int> context, int x, int y)
+    partial void IFooDo2(ExtensionContext<int> context, int x, int y);
+    int IFoo.Do2(ExtensionContext<int> context, int x, int y)
     {
       IFooDo2(context, x, y);
       return context.LastValue;
@@ -72,19 +72,19 @@ namespace ConsoleApplication2
 
   public partial class Foo
   {
-    partial void IFooCalc(ExtendContext<int> context)
+    partial void IFooCalc(ExtensionContext<int> context)
     {
       if (context.SupressOriginalCall) return;
 
       context.LastValue = 5;
     }
 
-    partial void IFooDo(ExtendContext context)
+    partial void IFooDo(ExtensionContext context)
     {
       if (context.SupressOriginalCall) return;
     }
 
-    partial void IFooDo2(ExtendContext<int> context, int x, int y)
+    partial void IFooDo2(ExtensionContext<int> context, int x, int y)
     {
       if (context.SupressOriginalCall) return;
       context.LastValue = 1;
