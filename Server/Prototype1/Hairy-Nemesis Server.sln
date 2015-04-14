@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Proxy", "Server.Prox
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Map", "Server.Map\Server.Map.csproj", "{0BA9CCBE-8FE4-4E92-BD48-32659AE1781E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{AD9A602A-7C6C-4F3B-BA82-84632C561B94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{0BA9CCBE-8FE4-4E92-BD48-32659AE1781E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BA9CCBE-8FE4-4E92-BD48-32659AE1781E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BA9CCBE-8FE4-4E92-BD48-32659AE1781E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD9A602A-7C6C-4F3B-BA82-84632C561B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD9A602A-7C6C-4F3B-BA82-84632C561B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD9A602A-7C6C-4F3B-BA82-84632C561B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD9A602A-7C6C-4F3B-BA82-84632C561B94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
