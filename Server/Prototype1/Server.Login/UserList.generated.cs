@@ -126,7 +126,9 @@ namespace Server.Login
 
 		#region Messages
 
+
 		partial void OnProcessAddUserMessage(AddUserMessage message);
+		//< #=m.Declaration.GetSummary("		")# >
 		public void RegisterAddUserMessage(AddUserMessage message)
 		{
 			OnProcessAddUserMessage(message);
@@ -142,7 +144,9 @@ namespace Server.Login
 			OnProcessLoginUserMessage(message, returnValue);
 			return returnValue.ReturnValue;
 		}
+
 		partial void OnProcessLogoutUserMessage(LogoutUserMessage message);
+		//< #=m.Declaration.GetSummary("		")# >
 		public void RegisterLogoutUserMessage(LogoutUserMessage message)
 		{
 			OnProcessLogoutUserMessage(message);

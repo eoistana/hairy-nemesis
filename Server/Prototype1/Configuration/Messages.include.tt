@@ -21,7 +21,7 @@
 				{#>
 
 		partial void OnProcess<#=m.Name#>Message(<#=m.Name#>Message message);
-		<#=m.Declaration.GetSummary("		")#>
+		//< #=m.Declaration.GetSummary("		")# >
 		public void Register<#=m.Name#>Message(<#=m.Name#>Message message)
 		{
 			OnProcess<#=m.Name#>Message(message);

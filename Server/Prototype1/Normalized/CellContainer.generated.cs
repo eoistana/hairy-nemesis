@@ -82,7 +82,9 @@ namespace Modules.Engine
 
 		#region Messages
 
+
 		partial void OnProcessUpdatePositionMessage(UpdatePositionMessage message);
+		//< #=m.Declaration.GetSummary("		")# >
 		public void RegisterUpdatePositionMessage(UpdatePositionMessage message)
 		{
 			OnProcessUpdatePositionMessage(message);

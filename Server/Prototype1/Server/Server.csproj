@@ -54,9 +54,6 @@
     <Compile Include="EdgeType.generated.cs">
       <DependentUpon>ServerCodeGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="LoginUserMessage.generated.cs">
-      <DependentUpon>ServerCodeGenerator.tt</DependentUpon>
-    </Compile>
     <Compile Include="MoveMessage.generated.cs">
       <DependentUpon>ServerCodeGenerator.tt</DependentUpon>
     </Compile>

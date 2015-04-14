@@ -10,17 +10,7 @@ namespace Server
 	[DataContract]
 	public partial class UpdatePositionMessage
 	{
-		[DataMember] public int EntityId;
-		[DataMember] public double X;
-		[DataMember] public double Y;
-
-		public UpdatePositionMessage(){}
-		public UpdatePositionMessage(int EntityId, double X, double Y)
-		{
-			this.EntityId = EntityId;
-			this.X = X;
-			this.Y = Y;
-		}
+		
 
 	}
 }
